@@ -1,0 +1,117 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Admin Profile</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                  <li>
+                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-person-bounding-box"></i> <span class="ms-1 d-none d-sm-inline">Admins Panel</span></a>
+                    <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                        <li class="w-100">
+                            <a href="/admins-panel" class="nav-link px-0"> 
+                              <i class="fa-solid fa-users"></i><span class="d-none d-sm-inline">Admins</span></a>
+                        </li>
+                        <li class="w-100">
+                            <a href="/new-admin" class="nav-link px-0"> 
+                                <i class="fa-solid fa-user-plus"></i><span class="d-none d-sm-inline">Add Admin</span></a>
+                        </li>
+                    </ul>
+                </li>
+                  <li>
+                        <a href="/admin-orders" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Orders History</span></a>
+                    </li>
+                    <li>
+                      <a href="/pending-orders" class="nav-link px-0 align-middle">
+                          <i class="fs-4 bi-clipboard"></i> <span class="ms-1 d-none d-sm-inline">Pending Orders</span> </a> 
+                    </li>
+                    <li>
+                      <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                          <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products Panel</span></a>
+                      <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                          <li class="w-100">
+                              <a href="/prods" class="nav-link px-0"> 
+                                  <i class="fa-solid fa-boxes-stacked"></i><span class="d-none d-sm-inline">Products</span></a>
+                          </li>
+                          <li class="w-100">
+                              <a href="/prodreg" class="nav-link px-0"> 
+                                  <i class="fa-solid fa-box"></i><span class="d-none d-sm-inline">Add Product</span></a>
+                          </li>
+                          <li class="w-100">
+                            <a href="/dollar-factor" class="nav-link px-0"> 
+                                <i class="fa-solid fa-box"></i><span class="d-none d-sm-inline">Update Currency</span></a>
+                          </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="/deliveries" class="nav-link px-0 align-middle">
+                          <i class="fs-4 bi-file-post-fill"></i><span class="ms-1 d-none d-sm-inline">Deliveries</span> </a> 
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false" (click)="logout()">
+                        <i class="fs-4 bi bi-person-circle"></i>
+                        <span class="d-none d-sm-inline mx-1">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3 mt-4">
+            <!--  Content Area Start  -->
+            <div class="scrollable">      
+              <div class="row">
+                  <div class="col-md-1"></div>
+                      <div class="col-md-10">
+                        <div class="container mt-4" >
+   
+                          <div class="card container">
+                            <div class="title">Add Admin</div>
+                            <hr>
+                              <div class="box">
+                                <div class="row">
+                                  <div class="col-md-3"></div>
+                                  <div class="col-md-6">
+                                    <form class="was-validated">
+                                      <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}"  class="form-control" id="name" placeholder="Enter Name" required/>
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"  class="form-control" id="email" placeholder="Enter Email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required/>
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Phone</label>
+                                        <input type="text" [(ngModel)]="phone" [ngModelOptions]="{standalone: true}"  class="form-control" id="phone" placeholder="Enter 10 digit mobile number" pattern="[6-9]{1}[0-9]{9}|[789]{1}[0-9]{9}" required/>
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+                                      </div>                                        
+                                        <div class="block">
+                                          <button type="submit" class="btn btn-primary mt-4" (click)="add_admin()">Add</button>
+                                        </div>
+                                    </form>    
+                                  </div>
+                                  <div class="col-md-3"></div>
+                                </div>
+                                </div>
+                          </div>
+                          <div>
+              
+                      </div>
+                  <div class="col-md-1"></div>
+              </div>
+            </div>
+  
+  
+            <!--  Content Area End  -->            
+        </div>
+    </div>
+  </div>  

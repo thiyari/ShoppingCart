@@ -1,0 +1,52 @@
+header {
+    padding-top: 70px;
+  }
+  
+.navbar {
+    background-color: darkblue;
+}
+
+.nav-item{
+    display: inline;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.form-control {
+    border-radius: 3px;
+    width: 300px;
+    margin-left: 28px;
+}
+
+.search-icon {
+    position: absolute;
+    z-index: 10;
+    right: 63%;
+    top: 22px;
+    color: darkblue;
+}
+
+.btn {
+    background-color: darkblue;
+}
+
+
+@media (max-width: 360px){
+    .search-icon {
+        position: absolute;
+        z-index: 10;
+        right: 10%;
+        top: 82px;
+        color: darkblue;
+    }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 768px){
+    .search-icon {
+        position: absolute;
+        z-index: 10;
+        right: 10%;
+        top: 82px;
+        color: darkblue;
+    }
+}

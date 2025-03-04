@@ -1,0 +1,41 @@
+.col-auto{
+    background-color: darkblue;
+}
+
+.nav-link{
+    color: #fff;
+}
+
+span{
+    padding: 10px;
+}
+
+.card{
+    border-width: 2px; 
+    border-color: darkblue; 
+    border-radius: 1rem;
+}
+
+.box{
+    padding: 10px;
+}
+
+.title{
+    text-align: center; 
+    font-size: xx-large; 
+    font-weight: bold; 
+    color: darkblue;
+}
+
+.btn-primary{
+    background-color: darkblue; 
+    float: right;
+    border-radius:0%; 
+    width:25%;
+}
+
+.scrollable {
+    height: 600px;      /* Set height of the div */
+    overflow-x: hidden;
+    overflow-y: scroll; /* Enable vertical scrolling */
+  }

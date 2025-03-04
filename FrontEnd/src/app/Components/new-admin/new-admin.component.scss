@@ -1,0 +1,66 @@
+.col-auto{
+    background-color: darkblue;
+}
+
+.nav-link{
+    color: #fff;
+}
+
+span{
+    padding: 10px;
+}
+
+.card{
+    border-width: 2px; 
+    border-color: darkblue; 
+}
+
+.box{
+    padding: 20px;
+}
+
+.title{
+    text-align: center; 
+    font-size: xx-large; 
+    font-weight: bold; 
+    color: darkblue;
+}
+
+h4 {
+    left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    color: darkblue;
+    top: 50%;
+    width: 100%;
+}
+
+.scrollable {
+    height: 600px;      /* Set height of the div */
+    overflow-x: hidden;
+    overflow-y: scroll; /* Enable vertical scrolling */
+  }
+
+  .btn-primary{
+    background-color: darkblue;
+    width: 250px;
+  }
+  
+  .block{
+    text-align: center;
+   }
+
+
+@media (max-width: 360px){
+    h4 {
+        left: 25px;
+    }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 768px){
+    h4 {
+        left: 25px;
+    }
+}

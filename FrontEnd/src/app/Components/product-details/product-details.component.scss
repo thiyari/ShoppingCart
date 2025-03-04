@@ -1,0 +1,107 @@
+.col-auto{
+    background-color: darkblue;
+}
+
+.nav-link{
+    color: #fff;
+}
+
+span{
+    padding: 10px;
+}
+
+.card{
+    border-width: 2px; 
+    border-color: darkblue; 
+}
+
+.box{
+    padding: 10px;
+}
+
+.title{
+    text-align: center; 
+    font-size: xx-large; 
+    font-weight: bold; 
+    color: darkblue;
+}
+
+h4 {
+    left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    color: darkblue;
+    top: 50%;
+    width: 100%;
+}
+
+.scrollable {
+    height: 600px;      /* Set height of the div */
+    overflow-x: hidden;
+    overflow-y: scroll; /* Enable vertical scrolling */
+  }
+
+/* image-slider.component.css */
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 500px; /* Adjust the height of the slider */
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  transition: 0.5s;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+
+@media (max-width: 360px){
+    h4 {
+        left: 25px;
+    }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 768px){
+    h4 {
+        left: 25px;
+    }
+}

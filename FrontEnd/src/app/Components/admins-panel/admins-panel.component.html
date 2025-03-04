@@ -1,0 +1,117 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Admin Profile</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-person-bounding-box"></i> <span class="ms-1 d-none d-sm-inline">Admins Panel</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="/admins-panel" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-users"></i><span class="d-none d-sm-inline">Admins</span></a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/new-admin" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-user-plus"></i><span class="d-none d-sm-inline">Add Admin</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/admin-orders" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Orders History</span></a>
+                    </li>
+                    <li>
+                        <a href="/pending-orders" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-clipboard"></i> <span class="ms-1 d-none d-sm-inline">Pending Orders</span> </a> 
+                    </li>
+                    <li>
+                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products Panel</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="/prods" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-boxes-stacked"></i><span class="d-none d-sm-inline">Products</span></a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/prodreg" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-box"></i><span class="d-none d-sm-inline">Add Product</span></a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/dollar-factor" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-box"></i><span class="d-none d-sm-inline">Update Currency</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/deliveries" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-file-post-fill"></i><span class="ms-1 d-none d-sm-inline">Deliveries</span> </a> 
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false" (click)="logout()">
+                        <i class="fs-4 bi bi-person-circle"></i>
+                        <span class="d-none d-sm-inline mx-1">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3 mt-4">
+            <!--  Content Area Start  -->
+            <div class="scrollable">      
+                <div class="row">
+                    <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <ng-container *ngIf="admins?.length != 0">
+                                <div class="card container">
+                                    <div class="box">
+                                        <div class="title">List of Admins</div>
+                                        <hr>
+                                        <div class="table" style="border: none;">
+                                                <div class ="table-responsive-md">                  
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>S.No.</th>
+                                                            <th>Name</th>
+                                                            <th>Email</th>
+                                                            <th>Phone</th>     
+                                                            <th colspan="2">Edit & Delete</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-group-divider">
+                                                        <tr *ngFor="let item of admins; let i = index">
+                                                            <td>{{i+1}}</td>
+                                                            <td>{{item.name}}</td>
+                                                            <td>{{item.email}}</td>
+                                                            <td>{{item.phone}}</td>
+                                                            <td><a class="btn btn-success" [routerLink]="['/edit-admin', item._id]"><i class="fa-solid fa-user-pen"></i></a></td>
+                                                            <td><a class="btn btn-danger" (click)="delete_admin(item._id, item.name)"><i class="fa-solid fa-user-xmark"></i></a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="admins?.length === 0">
+                                <div class="container">
+                                    <div>
+                                        <h4>There is no history of orders</h4>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    <div class="col-md-1"></div>
+                </div>
+                </div>
+            <!--  Content Area End  -->            
+        </div>
+    </div>
+</div>

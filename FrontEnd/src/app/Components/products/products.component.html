@@ -1,0 +1,43 @@
+<!--
+<div class="card-top container">
+    <div class="container d-flex">
+        <div class="item">
+            <a>
+                <img src="https://cdn-icons-png.flaticon.com/512/839/839155.png" alt="all products">
+                <h6>All products</h6>
+            </a>
+        </div>
+        <div class="item">
+            <a>
+                <img src="https://cdn-icons-png.flaticon.com/512/448/448003.png" alt="cakes">
+                <h6>Cakes</h6>
+            </a>
+        </div>
+        <div class="item">
+            <a>
+                <img src="https://cdn-icons-png.flaticon.com/512/403/403631.png" alt="pickles">
+                <h6>Pickles</h6>
+            </a>
+        </div>
+        <div class="item">
+            <a>
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/024/282/370/small/papad-icon-in-3d-style-vector.jpg" alt="papads">
+                <h6>Papads</h6>
+            </a>
+        </div>
+    </div>
+</div>
+-->
+<div class="container">
+    <div class="row">
+        <ng-container *ngFor="let item of productsList | filter:searchKey:'name'">
+            <div class="card col-md-3">
+                <img src="{{item.images[0]}}" alt="image">
+                <h5 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100ch;">{{item.name}}</h5>
+                <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100ch;">{{item.description}}</p>
+                <p><strong>Price:</strong> ₹{{item.price}}</p>
+                <a class="btn btn-primary" [routerLink]="['/product',item.pid]">View Product</a>
+            </div>
+        </ng-container>
+    </div>
+</div>

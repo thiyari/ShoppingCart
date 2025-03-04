@@ -1,0 +1,256 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">User Profile</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                        <a href="/user-orders" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">My Orders</span></a>
+                    </li>
+                    <li>
+                        <a href="/user-requests" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-clipboard"></i> <span class="ms-1 d-none d-sm-inline">Pending Orders</span> </a>
+                    </li>
+                    <li>
+                        <a href="/user-delivery" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-file-post-fill"></i> <span class="ms-1 d-none d-sm-inline">Delivery Status</span> </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false" (click)="logout()">
+                        <i class="fs-4 bi bi-person-circle"></i>
+                        <span class="d-none d-sm-inline mx-1">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3 mt-4">
+            <!--  Content Area Start  -->
+            <div class="scrollable">      
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="container">
+                            <div class="card container">
+                              <div class="title">Tracking Delivery</div>
+                              <hr>
+                                <div class="box">
+                                    <div class="row" *ngIf="!toggle">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <form class="form-inline">
+                                                    <div class="col-md-7">
+                                                        <input class="form-control mr-sm-2" type="text" [(ngModel)]="orderid" [ngModelOptions]="{standalone: true}" placeholder="Order Id" aria-label="text" >
+                                                    </div>
+                                                    <div class="col-md-1" style="padding: 10px;"></div>
+                                                    <div class="col-md-4">
+                                                        <button class="btn btn-primary" style="width: 100%" (click)="onSubmit()">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                    <div class="d-flex flex-column overflow-auto h-100 text-dark" *ngIf="toggle">
+
+                                        <div class="container h-50 px-4 mx-auto">
+                                                <div class="row d-flex 
+                                                            justify-content-between
+                                                             pt-3">
+                                                    <div class="d-flex flex-column 
+                                                    text-sm-right h5">
+                                                        <p class="h5 text-dark">
+                                                            <i class="text-primary 
+                                                                    fa-lg mr-1">
+                                                            </i>
+                                                            Order ID : 
+                                                            <span class="text-success 
+                                                                        font-weight-bold">
+                                                                <i class="text-secondary 
+                                                                            fa-solid fa-hashtag
+                                                                            mr-1">
+                                                                </i>{{orderid}}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex flex-column 
+                                                                text-sm-right h5" *ngIf="status === 'Out For Delivery' else date_of_delivery">
+                                                        <p class="mb-0 font-weight-bolder 
+                                                                    text-monospace">
+                                                            Expected Arrival :
+                                                            <span class="text-success font-weight-bold">
+                                                                <i class="text-secondary mr-1">
+                                                                </i>{{expected_date}}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <ng-template #date_of_delivery>
+                                                        <div class="d-flex flex-column 
+                                                                    text-sm-right h5" *ngIf="delivery_date != 'pending'">
+                                                            <p class="mb-0 font-weight-bolder 
+                                                                        text-monospace">
+                                                                Delivered On :
+                                                                <span class="text-success font-weight-bold">
+                                                                    <i class="text-secondary mr-1">
+                                                                    </i>{{delivery_date}}
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </ng-template> 
+                                                    <div class="d-flex flex-column 
+                                                    text-sm-right h5" *ngIf="status === 'Out For Delivery' || status === 'Delivered'">
+                                                        <p class="mb-0 font-weight-bold 
+                                                                    text-monospace 
+                                                                    pt-3 ml-5">
+                                                            Tracking ID :
+                                                            <span class="text-success font-weight-bold">
+                                                                <i class="text-secondary mr-1">
+                                                                </i>{{tracking_id}}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="container-fluid 
+                                                                        p-2 custom-adjustment align-items-center">
+                                                                <div class="d-flex
+                                                                            justify-content-around">
+                                                                    <button class="btn btn-primary 
+                                                                                    text-white 
+                                                                                    rounded-circle" 
+                                                                            data-bs-toggle="tooltip"
+                                                                            title="Order Confirmed">
+                                                                        <i class="fa-solid fa-check"></i>
+                                                                    </button>
+
+                                                                    <span class="bg-secondary w-50 p-1
+                                                                                    mx-n1 rounded mt-auto
+                                                                                    mb-auto" *ngIf="status === 'Order Confirmed'">
+                                                                    </span>
+
+                                                                    <span class="btn btn-primary w-50 p-1
+                                                                                    mx-n1 rounded mt-auto
+                                                                                    mb-auto" *ngIf="status === 'Out For Delivery' || status === 'Delivered'">
+                                                                    </span>
+                
+                                                                    <button class="btn bg-secondary
+                                                                                    text-white 
+                                                                                    rounded-circle" 
+                                                                            data-bs-toggle="tooltip"
+                                                                            title="Out for delivery" 
+                                                                            style="z-index:1"  *ngIf="status === 'Order Confirmed'">
+                                                                        <i class="fa-solid fa-check"></i>
+                                                                    </button>
+                                                                    <button class="btn btn-primary
+                                                                                    text-white 
+                                                                                    rounded-circle" 
+                                                                            data-bs-toggle="tooltip"
+                                                                            title="Out for delivery" 
+                                                                            style="z-index:1" *ngIf="status === 'Out For Delivery' || status === 'Delivered'">
+                                                                        <i class="fa-solid fa-check"></i>
+                                                                    </button>                                                                    
+                                                                    <span class="bg-secondary w-50 p-1 
+                                                                                    mx-n1 rounded mt-auto 
+                                                                                    mb-auto" *ngIf="status === 'Order Confirmed' || status === 'Out For Delivery'">
+                                                                    </span>
+                                                                    <span class="btn-primary w-50 p-1 
+                                                                                    mx-n1 rounded mt-auto 
+                                                                                    mb-auto" *ngIf="status === 'Delivered'">
+                                                                    </span>
+                                                                    <button class="btn bg-secondary 
+                                                                                    text-white rounded-circle" 
+                                                                            data-bs-toggle="tooltip"
+                                                                            title="Order Delivered" *ngIf="status === 'Order Confirmed' || status === 'Out For Delivery'">
+                                                                        <i class="fa-solid fa-check"></i>
+                                                                    </button>
+                                                                    <button class="btn btn-primary 
+                                                                                    text-white rounded-circle" 
+                                                                            data-bs-toggle="tooltip"
+                                                                            title="Order Delivered" *ngIf="status === 'Delivered'">
+                                                                        <i class="fa-solid fa-check"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-inline-flex 
+                                                            justify-content-around 
+                                                            my-3 py-4 custom-icons-adjustment">
+                                                    <div class="row d-inline-flex 
+                                                                align-items-center">
+                                                        <i class="text-primary fa-solid 
+                                                                    fa-clipboard-check 
+                                                                    fa-2xl mx-n2 mb-3">
+                                                            </i>
+                                                        <p class="text-dark font-weight-bolder 
+                                                                    py-1 px-1 mx-n2">
+                                                            Order
+                                                            <br>
+                                                            Confirmed
+                                                            </p>
+                                                    </div>
+                                                    <div class="row d-inline-flex 
+                                                                align-items-center">
+                                                        <i class="text-secondary fa-solid 
+                                                                fa-truck-arrow-right
+                                                                fa-2xl mx-n2 mb-3"
+                                                                *ngIf="status === 'Order Confirmed'">
+                                                        </i>  
+                                                        <i class="text-warning fa-solid 
+                                                                    fa-truck-arrow-right
+                                                                    fa-2xl mx-n2 mb-3"
+                                                                    *ngIf="status === 'Out For Delivery' || status === 'Delivered'">
+                                                            </i>
+                                                        
+                                                        <p class="text-dark 
+                                                                    font-weight-bolder
+                                                                    py-1 px-1 mx-n2">
+                                                            Out for
+                                                            <br>
+                                                            Delivery
+                                                            </p>
+                                                    </div>
+                                                    <div class="row d-inline-flex 
+                                                                align-items-center">
+                                                        <i class="text-secondary fa-solid
+                                                                fa-house-chimney 
+                                                                fa-2xl mx-n2 mb-3"
+                                                                *ngIf="status === 'Order Confirmed' || status === 'Out For Delivery'">
+                                                        </i>
+                                                        <i class="text-success fa-solid
+                                                                    fa-house-chimney 
+                                                                    fa-2xl mx-n2 mb-3"
+                                                                    *ngIf="status === 'Delivered'">
+                                                            </i>
+                                                        <p class="text-dark font-weight-bolder
+                                                                    py-1 px-1 mx-n2">
+                                                            Order
+                                                            <br>
+                                                            Delivered
+                                                            </p>
+                                                    </div>
+                                                </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                <div>
+            </div>
+            <!--  Content Area End  -->            
+        </div>
+    </div>
+</div>

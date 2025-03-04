@@ -1,0 +1,39 @@
+<div class="container mt-3">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-7">
+        <div class="card" style="border: none;">
+            <!-- image-slider.component.html -->
+            <div class="slider-container">
+                <div class="slider" [style.transform]="'translateX(' + currentSlide * -100 + '%)'">
+                    <div class="slide" *ngFor="let image of product.images">
+                        <img [src]="image" alt="Slide">
+                    </div>
+                </div>
+                <button class="prev" (click)="previousSlide()">&#10094;</button>
+                <button class="next" (click)="nextSlide()">&#10095;</button>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;">
+                <h2 class="card-header">
+                    <div class="header-font">{{product.name}}</div>
+                </h2>
+                <div class="card-body">  
+                <p><strong>Product ID:</strong> {{product.pid}}</p>
+                <p><strong>Product Description:</strong></p>
+                <p style="max-width: 100ch;">{{product.description}}</p>
+                <p><strong>Price: </strong> ₹{{product.price}}</p>
+                <p><strong>Quantity: </strong>
+                <select class='select-option' required
+                [(ngModel)]='optionSelected' (ngModelChange)='onOptionsSelected($event)'>
+                    <option class='option' *ngFor='let option of options' selected [value]="option">{{option}}</option>
+                </select>
+                </p>
+            </div>
+                <button class="btn btn-outline-success" (click)="addtocart(product)">Add to cart</button>
+                <button class="btn btn-outline-secondary" routerLink="/products">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+</div>

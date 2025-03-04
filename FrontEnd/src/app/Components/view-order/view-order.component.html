@@ -1,0 +1,215 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline" *ngIf='log_status === "user"'>User Profile</span>
+                    <span class="fs-5 d-none d-sm-inline" *ngIf='log_status === "admin"'>Admin Profile</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle" *ngIf='log_status === "admin"'>
+                            <i class="fs-4 bi-person-bounding-box"></i> <span class="ms-1 d-none d-sm-inline">Admins Panel</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="/admins-panel" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-users"></i><span class="d-none d-sm-inline">Admins</span></a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/new-admin" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-user-plus"></i><span class="d-none d-sm-inline">Add Admin</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/user-orders" class="nav-link px-0 align-middle" *ngIf='log_status === "user"'>
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">My Orders</span></a>
+                        <a href="/admin-orders" class="nav-link px-0 align-middle" *ngIf='log_status === "admin"'>
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Orders History</span></a>                            
+                    </li>
+                    <li>
+                        <a href="/user-requests" class="nav-link px-0 align-middle" *ngIf='log_status === "user"'>
+                            <i class="fs-4 bi-clipboard"></i> <span class="ms-1 d-none d-sm-inline">Pending Orders</span> </a>
+                        <a href="/pending-orders" class="nav-link px-0 align-middle" *ngIf='log_status === "admin"'>
+                            <i class="fs-4 bi-clipboard"></i> <span class="ms-1 d-none d-sm-inline">Pending Orders</span> </a>
+                    </li>
+                    <li>
+                        <a href="/user-delivery" class="nav-link px-0 align-middle" *ngIf='log_status === "user"'>
+                            <i class="fs-4 bi-file-post-fill"></i> <span class="ms-1 d-none d-sm-inline">Delivery Status</span> </a>
+                    </li>
+                    <li>
+                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle" *ngIf='log_status === "admin"'>
+                            <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products Panel</span></a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="/prods" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-boxes-stacked"></i><span class="d-none d-sm-inline">Products</span></a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/prodreg" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-box"></i><span class="d-none d-sm-inline">Add Product</span></a>
+                            </li>
+                            <li class="w-100">
+                                <a href="/dollar-factor" class="nav-link px-0"> 
+                                    <i class="fa-solid fa-box"></i><span class="d-none d-sm-inline">Update Currency</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/deliveries" class="nav-link px-0 align-middle" *ngIf='log_status === "admin"'>
+                            <i class="fs-4 bi-file-post-fill"></i><span class="ms-1 d-none d-sm-inline">Deliveries</span> </a> 
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false" (click)="logout()">
+                        <i class="fs-4 bi bi-person-circle"></i>
+                        <span class="d-none d-sm-inline mx-1">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3 mt-4">
+            <!--  Content Area Start  -->
+            <div class="scrollable">      
+            <div class="row">
+                <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="card container">
+                            <div class="box" id="gen_pdf"> 
+                                <div style="float: left; text-align: left;">
+                                    <img src="images/Sample_logo.png" alt="company_logo" [ngStyle]="{'width.px':300, 'height.px':200}">
+                                </div>
+                                <div style="float: right; text-align: right;">
+                                    <h4>Invoice/Payment Bill</h4>
+                                    <p>(Original for Receipt)</p>
+                                </div>
+                                <div style="clear: both;"></div>
+                                <div style="float: left; text-align: left;">
+                                    <p>
+                                        <b>To:</b><br>
+                                        {{data?.name}}<br>
+                                    </p>
+                                    <p>
+                                        <b>Email: </b>{{data?.email}}<br>
+                                        <b>Phone: </b>{{data?.phone}}
+                                    </p>
+                                </div>
+                                <div style="float: right; text-align: right;">
+                                    <b>Sold By:</b>
+                                    <p style="white-space: wrap; max-width: 30ch; word-wrap: break-word;">
+                                    Web Market,
+                                    Building No. B12, ESI Hyd Estates Pvt Ltd,
+                                    Pochampally Village, Dist: Nalgonda,
+                                    Pin 558412,
+                                    TELANGANA,
+                                    IN</p>
+                                </div>
+                                <div style="clear: both;"></div>
+                                <div style="float: left; text-align: left;">
+                                    <b>Shipping Address:</b>
+                                    <p style="white-space: wrap; max-width: 30ch; word-wrap: break-word;">
+                                    {{data?.shippingaddress}},
+                                    {{data?.city}},
+                                    {{data?.state}},
+                                    {{data?.country}},
+                                    PIN - {{data?.pin}}</p>
+                                </div>
+                                <div style="float: right; text-align: right;">
+                                    <div><b>Order Number:</b> {{data?.orderid}}</div>
+                                    <div><b>Payment Method:</b> {{data?.transactionstatus.replace("Received: ","")}}</div>
+                                    <div *ngIf="data?.transactionstatus === 'Received: GooglePay' else another"><b>Invoice Number:</b> {{data?.referenceid}}</div>
+                                    <ng-template #another>
+                                        <div><b>Transaction Number:</b> {{data?.transactionid}}</div>
+                                        <div><b>Invoice Number:</b> {{data?.referenceid}}</div>
+                                    </ng-template>
+                                    <div *ngIf="data?.transactionstatus === 'Received: PayPal' else other"><b>Invoice Date:</b> {{formatedDate(data?.transaction_date)}}</div>
+                                    <ng-template #other>
+                                        <div><b>Invoice Date:</b> {{formatedDate(data?.createdAt)}}</div>
+                                    </ng-template>  
+                                </div>
+                                <div style="clear: both;"></div>
+                                <br>
+                                <div class ="table-responsive-md">                  
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Product Id</th>
+                                                <th>Product Name</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>    
+                                                <th>Total</th>            
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            <ng-container *ngIf="data?.transactionstatus === 'Received: PayPal' else remaining">
+                                                <tr *ngFor="let item of data?.items; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{pidMap.get(item.product_name)}}</td>
+                                                    <td>{{item?.product_name}}</td>
+                                                    <td>$ {{item?.price}}</td>
+                                                    <td>{{item?.quantity}}</td>
+                                                    <td>{{item?.total_price}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td><strong>Grand Total:</strong></td>
+                                                    <td>$ {{data?.amount}}</td>
+                                                </tr>    
+                                            </ng-container>
+                                            <ng-template #remaining>
+                                                <tr *ngFor="let item of data?.ordersplaced; let i = index">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{item?.pid}}</td>
+                                                    <td>{{item?.name}}</td>
+                                                    <td>₹ {{item?.price}}</td>
+                                                    <td>{{item?.quantity}}</td>
+                                                    <td>{{item?.total}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                    <td><strong>Grand Total:</strong></td>
+                                                    <td>₹ {{data?.amount}}</td>
+                                                </tr>    
+                                            </ng-template>
+                                            <ng-container *ngIf="data?.transactionstatus === 'Received: PayPal' else rupees">
+                                                <tr>
+                                                    <td colspan="6"  style="border: none;"><strong>Amount in Words:</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="6"><strong>{{amount_in_words_dollars(data?.amount)}}</strong></td>         
+                                                </tr>
+                                            </ng-container>
+                                            <ng-template #rupees>
+                                                <tr>
+                                                    <td colspan="6" style="border: none;"><strong>Amount in Words:</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="6"><strong>{{amount_in_words_rupees(data?.amount)}}</strong></td>
+                                                </tr>
+                                            </ng-template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div style="float: right; text-align: right;">
+                                    For <b>Web Market</b>
+                                    <br>
+                                    <img src="images/Sample_sign.png" alt="company_logo" [ngStyle]="{'width.px':150, 'height.px':50}">
+                                    <br>
+                                    Authorized Signatory
+                                </div>
+                            </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" (click)="downloadAsPDF()">Download</button>
+                    </div>
+                    </div>
+                <div class="col-md-1"></div>
+            </div>
+            </div>
+            <!--  Content Area End  -->            
+        </div>
+    </div>
+</div>

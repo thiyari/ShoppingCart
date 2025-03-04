@@ -1,0 +1,90 @@
+.card-top{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: .25rem;
+
+}
+.item img {
+    width: 50px;
+    height: 50px;
+}
+.item{
+    margin: 10px 15px;
+    text-align: center;
+}
+.item a:hover{
+    color: blue;
+}
+
+.btn-primary{
+    background-color: darkblue;
+    color: #fff;
+}
+
+.card{
+    padding: 20px;
+    margin: 45px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+.card img{
+    width: 200px;
+    height: 200px;
+    margin-bottom: 15px;
+    transition: 0.3 ease-in-out;
+}
+
+.card img:hover{
+    transition: 0.3s ease-in-out;
+    transform: scale(1.1);
+}
+
+@media only screen and (max-width: 360px){
+    .item{
+        margin: 5px 10px;
+        text-align: center;
+        width:50%;
+    }
+    .item img {
+        width: 25px;
+        height: 25px;
+    }
+    .card{
+        padding: 20px;
+        margin: 12px;
+        width: 94%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    .btn-primary{
+        width:auto;
+    }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 768px){
+    .item{
+        margin: 5px 10px;
+        text-align: center;
+        width:50%;
+    }
+    .item img {
+        width: 25px;
+        height: 25px;
+    }
+    .card{
+        padding: 20px;
+        margin: 12px;
+        width: 94%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    .btn-primary{
+        width:auto;
+    }
+}

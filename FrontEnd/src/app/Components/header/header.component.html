@@ -1,0 +1,32 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand align-item-center d-flex" routerLink="/products">
+                <i style="font-size: 30px;" class="fas fa-solid fa-truck">&nbsp;
+                </i>
+                <strong style="font-size: 20px;">{{title}}</strong>
+            </a>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                <div class="nav-item">
+                    <input type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="search products">
+                </div>
+                <span class="fas fa-search search-icon"></span>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <strong style="font-size: 20px; color: white">Login</strong>
+                        <a class="btn" (click)="session_verify()">
+                            <i style="font-size: 30px; color: white" class="fas fa fa-user"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <a routerLink="/cart" class="btn" href="#">
+                <i style="font-size: 30px; color: white" class="fas fa-solid fa-cart-shopping"></i>
+                <div class="font-size: 10px;" class="badge bg-danger">{{totalItem}}</div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+</header>

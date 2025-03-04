@@ -1,0 +1,53 @@
+<div class="container mt-4" >
+    <ng-container>
+        <div class="card" style="border: none;">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="card container" id="gen_pdf">
+                        <div class="box">
+                            <div class ="table-responsive-md">  
+                                <div class="title">Transaction Acknowledgement</div>
+                                <hr> 
+                                <p><b>Thank You.</b></p>
+                                <p>Your payment request has been successfully recorded. Please quote your transaction reference number for any queries relating to this request.</p>
+                                <br>               
+                                <table class="table table-hover">
+                                    <tbody class="table-group-divider">
+                                        <tr>
+                                            <td><b>Transaction Number:</b></td>
+                                            <td>{{response.transactionid}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Transaction Date and Time:</b></td>
+                                            <td>{{formatedDate(response.createdAt)}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Order Id:</b></td>
+                                            <td>{{response.orderid}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Reference Number:</b></td>
+                                            <td>{{response.referenceid}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Name:</b></td>
+                                            <td>{{response.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Amount:</b></td>
+                                            <td>₹ {{response.amount}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="downloadAsPDF()">Download</button>
+        </div>
+    </ng-container>
+    
+</div>

@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">User Profile</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                        <a href="/user-orders" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">My Orders</span></a>
+                    </li>
+                    <li>
+                        <a href="/user-requests" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-clipboard"></i> <span class="ms-1 d-none d-sm-inline">Pending Orders</span> </a>
+                    </li>
+                    <li>
+                        <a href="/user-delivery" class="nav-link px-0 align-middle">
+                            <i class="fs-4 bi-file-post-fill"></i> <span class="ms-1 d-none d-sm-inline">Delivery Status</span> </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false" (click)="logout()">
+                        <i class="fs-4 bi bi-person-circle"></i>
+                        <span class="d-none d-sm-inline mx-1">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col py-3 mt-4">
+            <!--  Content Area Start  -->
+            <div class="scrollable">      
+            <div class="row">
+                <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <ng-container *ngIf="aggregation.length != 0">
+                            <div class="card container">
+                                <div class="box">
+                                    <div class="title">Orders History</div>
+                                    <hr>
+                                    <div class="table" style="border: none;">
+                                            <div class ="table-responsive-md">                  
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.No.</th>
+                                                        <th>Order Id</th>
+                                                        <th>No. of Items</th>
+                                                        <th>Total Amount</th>
+                                                        <th>Transaction Date</th>
+                                                        <th>View Invoice</th>        
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-group-divider">
+                                                    <tr *ngFor="let item of aggregation; let i = index">
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{item.orderid}}</td>
+                                                        <td *ngIf="item.transactionstatus === 'Received: PayPal';else total_orders">{{item.items.length}}</td>
+                                                        <ng-template #total_orders>
+                                                            <td>{{item.ordersplaced.length}}</td>
+                                                        </ng-template>  
+                                                        <td *ngIf="item.transactionstatus === 'Received: PayPal';else rupee">$ {{item.amount}}</td>
+                                                        <ng-template #rupee>
+                                                            <td>₹ {{item.amount}}</td>
+                                                        </ng-template>
+                                                        <td *ngIf="item.transactionstatus === 'Received: PayPal';else date">{{formatedDate(item.transaction_date)}}</td>
+                                                        <ng-template #date>
+                                                            <td>{{formatedDate(item.createdAt)}}</td>
+                                                        </ng-template>                                        
+                                                        <td><a [routerLink]="['/view-order',item.orderid]"><i class="fa-solid fa-eye fa-2x"></i></a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="aggregation.length === 0">
+                            <div class="container">
+                                <div>
+                                    <h4>There is no history of orders</h4>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                <div class="col-md-1"></div>
+            </div>
+            </div>
+            <!--  Content Area End  -->            
+        </div>
+    </div>
+</div>
