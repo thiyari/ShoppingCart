@@ -11,7 +11,7 @@ const MemoryStore = require('memorystore')(session)
 
 app.use(cors(
     {
-      origin: [process.env.CLIENT_URI],
+      origin: [process.env.CLIENT_URI, process.env.CLIENT_LOCAL_URI],
       methods: ['POST','GET','PUT','DELETE'],
       allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
       credentials:true,            //access-control-allow-credentials:true
