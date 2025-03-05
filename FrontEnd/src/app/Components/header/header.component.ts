@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit{
   session_verify(){
     this.http.get<any>(`${environment.SERVER_URI}/api/session`)
     .subscribe((res)=>{
+      console.log(res)
       if(res.valid){
           if (res.isLoggedIn && res.log_status === "user") {
             window.open("/user-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
