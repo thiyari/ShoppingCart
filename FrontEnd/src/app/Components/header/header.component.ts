@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit{
   public title: string = environment.COMPANY_NAME
   public totalItem: number = 0;
   public searchTerm: string = "";
+  public session_status: any;
   constructor(
     private cartService: CartService,
     private http: HttpClient, 
@@ -27,6 +28,10 @@ export class HeaderComponent implements OnInit{
     .subscribe(res=>{
       this.totalItem = res.length;
     })
+    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+    .subscribe((res)=>{
+      this.session_status = res
+    })
   }
   search(event: any){
     this.searchTerm = (event.target as HTMLInputElement).value;
@@ -34,18 +39,17 @@ export class HeaderComponent implements OnInit{
   }
 
   session_verify(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-      if(res.valid){
-          if (res.isLoggedIn && res.log_status === "user") {
+    
+      if(this.session_status.valid){
+          if (this.session_status.isLoggedIn && this.session_status.log_status === "user") {
             window.open("/user-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
           } 
-          else if (res.isLoggedIn && res.log_status === "admin") {
+          else if (this.session_status.isLoggedIn && this.session_status.log_status === "admin") {
             window.open("/admin-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
           }
       } else {
         this.router.navigate(['/login'])
       }
-    })
+    
   }
 }
