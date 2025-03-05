@@ -602,6 +602,7 @@ var verifyOtpControllerFn = async(req, res) => {
         session.email = email;
         session.isLoggedIn = true;
         session.log_status = log_status;
+        console.log(session.log_status)
         res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
@@ -623,7 +624,6 @@ var fetchAdminsControllerFn = async(req,res)=>
 
     
 var sessionControllerFn = async(req,res)=>{
-    console.log(session.log_status)
         if(session.email){
             return res.json({
                 valid: true, 
