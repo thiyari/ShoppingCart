@@ -174,7 +174,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const order_ids = inject(PrerenderParamsService)
-      const orderids = await order_ids.orders()
+      const orderids = await order_ids.delivery_orders()
       return orderids.map(orderid => ({orderid}));
     },
     fallback: PrerenderFallback.Server

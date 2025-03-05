@@ -17,8 +17,6 @@ export class PrerenderParamsService {
   paypal_txn_ids:any[] = [];
   payment_referenceids:any[] = [];
 
-  constructor(private api:ApiService, private transactions: AggregationService) { }
-
   async edit_admin(){
     const admins_list = await fetch(`${environment.SERVER_URI}/api/admins`)
     const admins_response = await admins_list.json()
@@ -39,6 +37,15 @@ export class PrerenderParamsService {
     const orders_list = await fetch(`${environment.SERVER_URI}/api/orders`)
     const orders_list_response = await orders_list.json()
     orders_list_response.records.map((x:any)=>this.order_ids.push(JSON.stringify(x.orderid)))
+
+    return Promise.resolve(this.order_ids)
+  }
+
+  async delivery_orders() {
+    const delivery_orders_list = await fetch(`${environment.SERVER_URI}/api/orders`)
+    const delivery_orders_list_response = await delivery_orders_list.json()
+    delivery_orders_list_response.records.filter((item:any)=>(item.transactionstatus != "pending"))
+    .map((x:any)=>this.order_ids.push(JSON.stringify(x.orderid)))
 
     return Promise.resolve(this.order_ids)
   }
