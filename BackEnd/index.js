@@ -26,6 +26,7 @@ app.use(express.urlencoded({limit: "50mb", extended: true , parameterLimit: 1000
 
 app.use(cookieParser());
 app.use(bodyParser.json())
+app.set('trust proxy', true) // For accessing sessions in Render 
 app.use(session({
     secret: 'web-market',
     resave: false,
