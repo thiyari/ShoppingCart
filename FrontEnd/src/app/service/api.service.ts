@@ -11,6 +11,13 @@ export class ApiService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  getSessions(){
+    return this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+    .pipe(map((res)=>{
+      return res;
+    }))    
+  }
+
   getProducts(){
     return this.http.get<any>(`${environment.SERVER_URI}/api/products`)
     .pipe(map((res)=>{

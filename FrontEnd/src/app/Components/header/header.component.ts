@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../service/cart.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { ApiService } from '../../service/api.service';
 
 @Component({
   selector: 'app-header',
@@ -18,8 +19,9 @@ export class HeaderComponent implements OnInit{
   public searchTerm: string = "";
   constructor(
     private cartService: CartService,
-    private http: HttpClient, 
-    private router: Router
+    //private http: HttpClient, 
+    private router: Router,
+    private api: ApiService
   ){}
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class HeaderComponent implements OnInit{
   }
 
   session_verify(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+    this.api.getSessions()
     .subscribe((res)=>{
       if(res.valid){
           if (res.isLoggedIn && res.log_status === "user") {
