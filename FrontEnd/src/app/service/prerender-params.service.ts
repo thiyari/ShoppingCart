@@ -16,7 +16,8 @@ export class PrerenderParamsService {
   razorpay_txn_ids:any[] = [];
   paypal_txn_ids:any[] = [];
   payment_referenceids:any[] = [];
-
+  delivery_orders_ids:any[] = [];
+  
   async edit_admin(){
     const admins_list = await fetch(`${environment.SERVER_URI}/api/admins`)
     const admins_response = await admins_list.json()
@@ -45,9 +46,9 @@ export class PrerenderParamsService {
     const delivery_orders_list = await fetch(`${environment.SERVER_URI}/api/orders`)
     const delivery_orders_list_response = await delivery_orders_list.json()
     delivery_orders_list_response.records.filter((item:any)=>(item.transactionstatus != "pending"))
-    .map((x:any)=>this.order_ids.push(JSON.stringify(x.orderid)))
+    .map((x:any)=>this.delivery_orders_ids.push(JSON.stringify(x.orderid)))
 
-    return Promise.resolve(this.order_ids)
+    return Promise.resolve(this.delivery_orders_ids)
   }
 
   async phonepe_txn(){
