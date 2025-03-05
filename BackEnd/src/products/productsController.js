@@ -598,7 +598,6 @@ var verifyOtpControllerFn = async(req, res) => {
     let otpreceived = req.body.otp;
     let email = req.body.email;
     let log_status = req.body.log_status;
-    console.log(log_status)
     if (savedOTPS[email] == otpreceived) {
         session.email = email;
         session.isLoggedIn = true;
@@ -624,6 +623,7 @@ var fetchAdminsControllerFn = async(req,res)=>
 
     
 var sessionControllerFn = async(req,res)=>{
+    console.log(session.log_status)
         if(session.email){
             return res.json({
                 valid: true, 
