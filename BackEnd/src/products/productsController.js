@@ -624,14 +624,14 @@ var fetchAdminsControllerFn = async(req,res)=>
     
 var sessionControllerFn = async(req,res)=>{
         if(session.email){
-            return res.json({
+            return res.send({
                 valid: true, 
                 email: session.email,
                 isLoggedIn: session.isLoggedIn,
                 log_status: session.log_status
             })
         } else {
-            return res.json({valid: false})
+            return res.send({valid: false})
         }
 }
 
@@ -643,9 +643,9 @@ var logoutControllerFn = async(req,res)=>
             session.isLoggedIn = false;
             session.log_status = ""
             res.clearCookie('connect.sid');
-            return res.json({valid: true})
+            return res.send({valid: true})
         } else {
-            return res.json({valid: false})
+            return res.send({valid: false})
         }
     }
 
