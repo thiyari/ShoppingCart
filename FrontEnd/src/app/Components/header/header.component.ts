@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../service/cart.service';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -34,7 +34,10 @@ export class HeaderComponent implements OnInit{
   }
 
   session_verify(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+    this.http.get<any>(`${environment.SERVER_URI}/api/session`, { headers })
     .subscribe((res)=>{
       if(res.valid){
           if (res.isLoggedIn && res.log_status === "user") {
