@@ -6,26 +6,6 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "headers": [
-      { 
-        "source":"/index.csr.html", 
-        "headers": [
-          {
-            "key": "Cache-Control", 
-            "value": "no-cache"
-            }
-        ] 
-      },
-      {
-        "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|js|css|eot|otf|ttf|ttc|woff|woff2|json|font.css)",
-        "headers": [
-            {
-                "key": "Cache-Control",
-                 "value": "max-age=0"
-            }
-        ]
-      }
-    ],
     "rewrites": [
       {
         "source": "**",
