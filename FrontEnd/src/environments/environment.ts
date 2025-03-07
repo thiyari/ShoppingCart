@@ -6,7 +6,7 @@ export const environment = {
     SERVER_LOCAL_URI: "http://localhost:8086",
     SERVER_URI: "http://shoppingcart-k9dy.onrender.com",
     CLIENT_LOCAL_URI: "http://localhost:4200",
-    CLIENT_URI: "http://shoppingcart-client-6a7c9.web.app",
+    CLIENT_URI: "http://shoppingcart-client-b3062.web.app",
     CLIENT_VERCEL_URI: "https://shopping-cart-kappa-ten.vercel.app",
     GOOGLE_PAY_GATEWAY: "example",
     GOOGLE_PAY_GATEWAY_MERCHANT_ID: "exampleGatewayMerchantId",
