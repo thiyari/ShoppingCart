@@ -4,6 +4,11 @@ import { PrerenderParamsService } from './service/prerender-params.service';
 
 export const serverRoutes: ServerRoute[] = [
   {
+    path: '**', // All other routes will be rendered on the server (SSR)
+    renderMode: RenderMode.Server,
+  },
+  /*
+  {
     path: '',
     renderMode: RenderMode.Prerender
   },
@@ -208,7 +213,7 @@ export const serverRoutes: ServerRoute[] = [
       return pids.map(pid => ({pid}));
     },
     fallback: PrerenderFallback.Server
-  }
+  } */
 ];
 
 
