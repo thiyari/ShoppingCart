@@ -31,8 +31,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        sameSite: 'none',
-        secure: true,
+        secure: false,
         expires: new Date(Date.now() + 3600000),
         maxAge: 3600000 // 1 lhour
         // 24 * 60 * 60 * 1000 // 24 hours

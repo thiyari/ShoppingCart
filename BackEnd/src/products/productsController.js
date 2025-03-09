@@ -624,7 +624,6 @@ var fetchAdminsControllerFn = async(req,res)=>
     
 var sessionControllerFn = async(req,res)=>{
         if(session.email){
-            console.log(session.email)
             return res.send({
                 valid: true, 
                 email: session.email,
