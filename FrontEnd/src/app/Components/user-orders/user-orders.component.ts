@@ -3,6 +3,7 @@ import { AggregationService } from '../../service/aggregation.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-user-orders',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 export class UserOrdersComponent implements OnInit {
 
   aggregation: any[] = []
-
+  
   constructor(
     private transactions: AggregationService,
     private http: HttpClient, 
@@ -22,8 +23,12 @@ export class UserOrdersComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
+    const session = this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+    .pipe(map((response)=>{
+          return response;
+        }))
+    
+      session.subscribe(res=>{
           if(res.valid){
               if (res.log_status === "user") {
                 this.aggregation = this.transactions.merge_userdata(res.email)
@@ -33,7 +38,7 @@ export class UserOrdersComponent implements OnInit {
           } else {
             this.router.navigate(['/login'])
           }
-    })
+      })
   }
 
   formatedDate = (savedTime:any) => {

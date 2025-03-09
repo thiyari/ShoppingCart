@@ -3,6 +3,7 @@ import { AggregationService } from '../../service/aggregation.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-admin-orders',
@@ -15,6 +16,7 @@ export class AdminOrdersComponent implements OnInit {
     aggregation: any[] = []
     filteredResult: any[] = []
     searchText: string = "";
+    
     constructor(
       private transactions: AggregationService,
       private http: HttpClient, 
@@ -22,8 +24,11 @@ export class AdminOrdersComponent implements OnInit {
     ){}
 
     ngOnInit(): void {
-      this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-      .subscribe((res)=>{
+      const session = this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+      .pipe(map((response)=>{
+            return response;
+          }))
+      session.subscribe(res=>{
             if(res.valid){
                 if (res.log_status === "admin") {
                   this.aggregation = this.transactions.merge_admindata();

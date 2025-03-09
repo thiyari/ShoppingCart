@@ -28,17 +28,15 @@ export class HeaderComponent implements OnInit{
       this.totalItem = res.length;
     })
   }
+  
   search(event: any){
     this.searchTerm = (event.target as HTMLInputElement).value;
     this.cartService.search.next(this.searchTerm)
   }
 
   session_verify(){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`, { headers })
-    .subscribe((res)=>{
+    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+    .subscribe(res=>{
       if(res.valid){
           if (res.isLoggedIn && res.log_status === "user") {
             window.open("/user-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
