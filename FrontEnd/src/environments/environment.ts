@@ -5,7 +5,7 @@ export const environment = {
     RAZOR_PAY_KEY: "rzp_test_pwqgLBWfRp7Dgx",
     SERVER_URI: "http://localhost:8086",
     SERVER_RENDER_URI: "https://shoppingcart-k9dy.onrender.com",
-    CLIENT_URI: "http://localhost:8080",
+    CLIENT_URI: "http://127.0.0.1:8080",
     CLIENT_FIREBASE_URI: "https://shoppingcart-client-b3062.web.app",
     CLIENT_VERCEL_URI: "https://shopping-cart-kappa-ten.vercel.app",
     GOOGLE_PAY_GATEWAY: "example",
