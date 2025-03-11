@@ -116,8 +116,13 @@ export class AggregationService {
         this.orders_records = res.records.filter((item:any)=>item.email===mail_id)
         this.orders_records.map((x:any)=>this.reference_ids.push(x.referenceid))
         }
+        console.log('inside ord:'+this.orders_records)
+        console.log('inside ref:'+this.reference_ids)
       })
 
+      console.log('outside ord:'+this.orders_records)
+      console.log('outside ref:'+this.reference_ids)
+      
     let user_result = this.merge_result(this.reference_ids, this.orders_records);
     this.reference_ids = []
     this.orders_records = []

@@ -23,12 +23,8 @@ export class UserOrdersComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    const session = this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .pipe(map((response)=>{
-          return response;
-        }))
-    
-      session.subscribe(res=>{
+    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+    .subscribe(res=>{
           if(res.valid){
               if (res.log_status === "user") {
                 this.aggregation = this.transactions.merge_userdata(res.email)
