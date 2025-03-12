@@ -35,7 +35,8 @@ app.use(session({
         expires: new Date(Date.now() + 3600000),
         maxAge: 3600000, // 1 lhour
         // 24 * 60 * 60 * 1000 // 24 hours
-        sameSite: 'strict'
+        sameSite: 'strict',
+        httpOnly: true
     },
     store: new MemoryStore({
         checkPeriod: 86400000 // prune expired entries every 24h
