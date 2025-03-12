@@ -38,9 +38,9 @@ app.use(session({
         sameSite: 'strict',
         httpOnly: true
     },
-    /*store: new MemoryStore({
+    store: new MemoryStore({
         checkPeriod: 86400000 // prune expired entries every 24h
-      }),*/
+      }),
 }
 ))
 
