@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './prods.component.html',
   styleUrl: './prods.component.scss'
 })
-export class ProdsComponent implements OnInit, AfterViewInit  {
+export class ProdsComponent implements OnInit, AfterViewChecked  {
 products: any[] = [];
 searchText: string = "";
 filteredResult: any[] = []
@@ -19,12 +19,11 @@ filteredResult: any[] = []
   constructor(     
     private api: ApiService,
     private http: HttpClient, 
-    private router: Router
+    private router: Router,
   ){}
   
   @ViewChildren('switch') switch!: QueryList<ElementRef>;
-  ngAfterViewInit() {
-
+  ngAfterViewChecked() {
     // After the view is initialized, loop through the switches and add event listeners
     this.switch.toArray().forEach(switchElement => {
       switchElement.nativeElement.addEventListener('change', (event:any) => this.handleSwitchChange(event));
@@ -57,11 +56,12 @@ filteredResult: any[] = []
                 .subscribe(res=>{
                   if (res.message === "Success"){
                         this.products = res.records
+                        // sorting the result according to datetime in descending order
+                        this.products.sort((a:any, b:any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                        this.search()
                     }
                   })
-                // sorting the result according to datetime in descending order
-                this.products.sort((a:any, b:any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                this.search()
+
             }
           } else {
             this.router.navigate(['/login'])

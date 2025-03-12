@@ -100,8 +100,8 @@
                                                             <td>
                                                                 <!-- Bootstrap Toggle Switch -->
                                                                 <div class="form-check form-switch">
-                                                                    <input class="form-check-input" type="checkbox" id="{{item._id}}" #switch *ngIf="item.display" checked>
-                                                                    <input class="form-check-input" type="checkbox" id="{{item._id}}" #switch *ngIf="!item.display">
+                                                                    <input class="form-check-input" type="checkbox" id="{{item._id}}" *ngIf="item.display" checked #switch>
+                                                                    <input class="form-check-input" type="checkbox" id="{{item._id}}" *ngIf="!item.display" #switch>
                                                                 </div>
                                                             </td>
                                                             <td><a [routerLink]="['/product-details',item.pid]"><i class="fa-solid fa-eye fa-2x"></i></a></td>
