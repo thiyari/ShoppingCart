@@ -599,9 +599,9 @@ var verifyOtpControllerFn = async(req, res) => {
     let email = req.body.email;
     let log_status = req.body.log_status;
     if (savedOTPS[email] == otpreceived) {
-        session.email = email;
-        session.isLoggedIn = true;
-        session.log_status = log_status;
+        req.session.email = email;
+        req.session.isLoggedIn = true;
+        req.session.log_status = log_status;
         res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
@@ -623,12 +623,12 @@ var fetchAdminsControllerFn = async(req,res)=>
 
     
 var sessionControllerFn = async(req,res)=>{
-        if(session.email){
+        if(req.session.email){
             return res.json({
                 valid: true, 
-                email: session.email,
-                isLoggedIn: session.isLoggedIn,
-                log_status: session.log_status
+                email: req.session.email,
+                isLoggedIn: req.session.isLoggedIn,
+                log_status: req.session.log_status
             })
         } else {
             return res.json({valid: false})
@@ -638,10 +638,10 @@ var sessionControllerFn = async(req,res)=>{
 
 var logoutControllerFn = async(req,res)=>
     {
-        if(session.email){
-            session.email = ""
-            session.isLoggedIn = false;
-            session.log_status = ""
+        if(req.session.email){
+            req.session.email = ""
+            req.session.isLoggedIn = false;
+            req.session.log_status = ""
             res.clearCookie('connect.sid');
             return res.json({valid: true})
         } else {
