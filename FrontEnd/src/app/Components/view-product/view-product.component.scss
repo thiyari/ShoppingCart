@@ -21,7 +21,7 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 500px; /* Adjust the height of the slider */
+    height: 400px; /* Adjust the height of the slider */
   }
   
   .slider {
@@ -65,3 +65,24 @@
   .next:hover {
     background-color: rgba(0, 0, 0, 0.7);
   }
+
+
+@media (max-width: 360px){
+/* image-slider.component.css */
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 185px; /* Adjust the height of the slider */
+  }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 768px){
+/* image-slider.component.css */
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 185px; /* Adjust the height of the slider */
+  }
+}
