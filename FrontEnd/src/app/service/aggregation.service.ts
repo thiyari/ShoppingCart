@@ -1,11 +1,26 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+//import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AggregationService {
 
+  result: any[] = [];
+
+  setData(response: any) {
+    this.result = response
+  }
+
+  getData() {
+    return this.result
+  }
+
+  clearData() {
+    return this.result = []
+  }
+
+/*
   orders_records: any[] = [];
   reference_ids:any[] = [];
   paypal_records:any[] = [];
@@ -13,7 +28,6 @@ export class AggregationService {
   phonepe_records: any[] = [];
   googlepay_records: any[] = []
   aggregation: any[] = []
-  result: any[] = [];
 
   constructor(private api: ApiService) { }
 
@@ -140,18 +154,7 @@ export class AggregationService {
 
     return admin_result    
   }
+*/
 
-
-  setData(response: any) {
-    this.result = response
-  }
-
-  getData() {
-    return this.result
-  }
-
-  clearData() {
-    return this.result = []
-  }
 }
 
