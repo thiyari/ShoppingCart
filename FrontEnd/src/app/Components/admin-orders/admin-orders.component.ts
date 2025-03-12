@@ -23,7 +23,6 @@ export class AdminOrdersComponent implements OnInit {
     phonepe_records: any[] = [];
     googlepay_records: any[] = []
     aggregation: any[] = []
-    result: any[] = [];
 
     filteredResult: any[] = []
     searchText: string = "";
@@ -130,8 +129,10 @@ export class AdminOrdersComponent implements OnInit {
               
                                     this.reference_ids = []
                                     this.orders_records = []
-                                    
+                                    // sorting the result according to datetime in ascending order
                                     var result = this.aggregation_result.sort((a:any, b:any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                                    // Below is an Alternative method for the descending order
+                                    //var result = this.aggregation.sort((a:any,b:any)=>b.createdAt < a.createdAt ? -1 : b.createdAt > a.createdAt ? 1 : 0)
                                     this.transactions.setData(result) 
                                     this.search();
 
