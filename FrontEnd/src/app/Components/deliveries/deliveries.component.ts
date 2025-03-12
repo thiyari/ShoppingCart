@@ -131,7 +131,7 @@ export class DeliveriesComponent implements OnInit{
                                     this.reference_ids = []
                                     this.orders_records = []
                                     
-                                    var result = this.aggregation.sort((a:any, b:any) =>  new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+                                    var result = this.aggregation_result.sort((a:any, b:any) =>  new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
                                     this.transactions.setData(result) 
                                     this.search();
 
