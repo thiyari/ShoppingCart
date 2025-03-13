@@ -29,7 +29,7 @@ app.use(bodyParser.json())
 app.use(session({
     secret: 'web-market',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: `${process.env.MONGO_DB_URI}/cart`,
         collectionName: "sessions", // Optional: Custom collection name
