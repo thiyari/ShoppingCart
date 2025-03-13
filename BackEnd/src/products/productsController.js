@@ -594,7 +594,7 @@ var sendOtpControllerFn = async(req, res) => {
     )
 }
 
-var verifyOtpControllerFn = async(req, res) => {
+var verifyOtpControllerFn = (req, res) => {
     let otpreceived = req.body.otp;
     let email = req.body.email;
     let log_status = req.body.log_status;
@@ -604,12 +604,17 @@ var verifyOtpControllerFn = async(req, res) => {
             isLoggedIn: true,
             log_status: log_status
         }
-        req.session.save()
+        req.session.save(err => {      // Saving the session immediately
+            if (err) {
+              return res.status(500).send('Error saving session');
+            }
+            res.send({"status":true,"message":"OTP verified successfully"});
+          });
         //session.email = email;
         //session.isLoggedIn = true;
         //session.log_status = log_status;
         console.log(req.session.user)
-        res.send({"status":true,"message":"OTP verified successfully"});
+        //res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
         res.send({"status":false,"message":"Invalid OTP"})
@@ -629,7 +634,7 @@ var fetchAdminsControllerFn = async(req,res)=>
 
 
     
-var sessionControllerFn = async(req,res)=>{
+var sessionControllerFn = (req,res)=>{
     console.log(req.session.user)
         if(req.session.user){
         //if(session.email){
@@ -648,7 +653,7 @@ var sessionControllerFn = async(req,res)=>{
 }
 
 
-var logoutControllerFn = async(req,res)=>
+var logoutControllerFn = (req,res)=>
     {   
         if(req.session.user){
         //if(session.email){
