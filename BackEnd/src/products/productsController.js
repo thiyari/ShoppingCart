@@ -594,7 +594,7 @@ var sendOtpControllerFn = async(req, res) => {
     )
 }
 
-var verifyOtpControllerFn = (req, res) => {
+var verifyOtpControllerFn = async (req, res, next) => {
     let otpreceived = req.body.otp;
     let email = req.body.email;
     let log_status = req.body.log_status;
@@ -604,17 +604,18 @@ var verifyOtpControllerFn = (req, res) => {
             isLoggedIn: true,
             log_status: log_status
         }
-        req.session.save(err => {      // Saving the session immediately
-            if (err) {
-              return res.status(500).send('Error saving session');
-            }
-            res.send({"status":true,"message":"OTP verified successfully"});
-          });
+        
+        try {
+            await req.session.save();
+        } catch (err) {
+            console.error('Error saving to session storage: ', err);
+            return next(new Error('Error creating user'));
+        }
         //session.email = email;
         //session.isLoggedIn = true;
         //session.log_status = log_status;
         console.log(req.session.user)
-        //res.send({"status":true,"message":"OTP verified successfully"});
+        res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
         res.send({"status":false,"message":"Invalid OTP"})
@@ -653,8 +654,16 @@ var sessionControllerFn = (req,res)=>{
 }
 
 
-var logoutControllerFn = (req,res)=>
+var logoutControllerFn = async (req,res, next)=>
     {   
+        try {
+            await req.session.destroy();
+            return res.json({valid: true})
+        } catch (err) {
+            console.error('Error logging out:', err);
+            return next(new Error('Error logging out'));
+        }
+        /*
         if(req.session.user){
         //if(session.email){
             //session.email = ""
@@ -665,7 +674,7 @@ var logoutControllerFn = (req,res)=>
             return res.json({valid: true})
         } else {
             return res.json({valid: false})
-        }
+        }*/
     }
 
 var editAdminsControllerFn = async(req,res)=>
