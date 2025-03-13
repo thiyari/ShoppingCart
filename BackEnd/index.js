@@ -32,11 +32,12 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         secure: true,
-        expires: new Date(Date.now() + 3600000),
-        maxAge: 3600000, // 1 lhour
-        // 24 * 60 * 60 * 1000 // 24 hours
+        saveUninitialized: true,
         sameSite: 'strict',
-        httpOnly: true
+        httpOnly: true,
+        expires: new Date(Date.now() + 3600000),
+        maxAge: 3600000 // 1 lhour
+        // 24 * 60 * 60 * 1000 // 24 hours
     }
     /* 
     store: new MemoryStore({
