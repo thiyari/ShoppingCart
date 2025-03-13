@@ -26,18 +26,13 @@ app.use(express.urlencoded({limit: "50mb", extended: true , parameterLimit: 1000
 app.use(cookieParser());
 app.use(bodyParser.json())
 app.use(session({
-    name: 'session.sid',
     secret: 'web-market',
-    httpOnly: true,
-    secure: true,
-    maxAge: 3600000,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
         mongoUrl: `${process.env.MONGO_DB_URI}/cart`,
         collectionName: "sessions", // Optional: Custom collection name
       }),
-    /*  
     cookie: {
         secure: true,
         sameSite: 'strict',
@@ -45,7 +40,7 @@ app.use(session({
         expires: new Date(Date.now() + 3600000),
         maxAge: 3600000 // 1 lhour
         // 24 * 60 * 60 * 1000 // 24 hours
-    }*/
+    }
 }
 ))
 
