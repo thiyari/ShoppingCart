@@ -594,28 +594,15 @@ var sendOtpControllerFn = async(req, res) => {
     )
 }
 
-var verifyOtpControllerFn = (req, res) => {
+var verifyOtpControllerFn = async(req, res) => {
     let otpreceived = req.body.otp;
     let email = req.body.email;
     let log_status = req.body.log_status;
     if (savedOTPS[email] == otpreceived) {
-        req.session.user = {
-            email: email,
-            isLoggedIn: true,
-            log_status: log_status
-        }
-
-        req.session.save(err => {      // Saving the session immediately
-            if (err) {
-              return res.status(500).send('Error saving session');
-            }
-            res.send({"status":true,"message":"OTP verified successfully"});
-          });
-        //session.email = email;
-        //session.isLoggedIn = true;
-        //session.log_status = log_status;
-        console.log(req.session.user)
-        //res.send({"status":true,"message":"OTP verified successfully"});
+        session.email = email;
+        session.isLoggedIn = true;
+        session.log_status = log_status;
+        res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
         res.send({"status":false,"message":"Invalid OTP"})
@@ -635,18 +622,13 @@ var fetchAdminsControllerFn = async(req,res)=>
 
 
     
-var sessionControllerFn = (req,res)=>{
-    console.log(req.session.user)
-        if(req.session.user){
-        //if(session.email){
+var sessionControllerFn = async(req,res)=>{
+        if(session.email){
             return res.json({
                 valid: true, 
-                email: req.session.user.email,
-                isLoggedIn: req.session.user.isLoggedIn,
-                log_status: req.session.user.log_status
-                //email: session.email,
-                //isLoggedIn: session.isLoggedIn,
-                //log_status: session.log_status
+                email: session.email,
+                isLoggedIn: session.isLoggedIn,
+                log_status: session.log_status
             })
         } else {
             return res.json({valid: false})
@@ -654,15 +636,13 @@ var sessionControllerFn = (req,res)=>{
 }
 
 
-var logoutControllerFn = (req,res)=>
-    {   
-        if(req.session.user){
-        //if(session.email){
-            //session.email = ""
-            //session.isLoggedIn = false;
-            //session.log_status = ""
-            req.session.destroy()
-            //res.clearCookie('connect.sid');
+var logoutControllerFn = async(req,res)=>
+    {
+        if(session.email){
+            session.email = ""
+            session.isLoggedIn = false;
+            session.log_status = ""
+            res.clearCookie('connect.sid');
             return res.json({valid: true})
         } else {
             return res.json({valid: false})

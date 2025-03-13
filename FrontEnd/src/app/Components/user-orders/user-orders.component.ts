@@ -32,7 +32,7 @@ export class UserOrdersComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.http.post<any>(`${environment.SERVER_URI}/api/session`,{})
+    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
     .subscribe(res=>{
           if(res.valid){
               if (res.log_status === "user") {
