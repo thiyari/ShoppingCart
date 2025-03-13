@@ -23,7 +23,6 @@ app.use(cors(
 app.use(express.json({limit: "50mb"})); // setting limit to 50 MB (52428800 in bytes)
 app.use(express.urlencoded({limit: "50mb", extended: true , parameterLimit: 100000}));
   
-app.set('trust proxy', 1)
 app.use(cookieParser());
 app.use(bodyParser.json())
 app.use(session({
