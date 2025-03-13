@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const axios = require("axios");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-//const session = require('express-session');
+const session = require('express-session');
 
 let salt_key = process.env.PHONE_PE_SALT_KEY
 let merchant_id = process.env.PHONE_PE_MERCHANT_ID
@@ -599,14 +599,9 @@ var verifyOtpControllerFn = async(req, res) => {
     let email = req.body.email;
     let log_status = req.body.log_status;
     if (savedOTPS[email] == otpreceived) {
-        req.session.user = {
-            role: log_status,
-            email: email
-        }
-        req.session.log_status = true;
-        //session.email = email;
-        //session.isLoggedIn = true;
-        //session.log_status = log_status;
+        session.email = email;
+        session.isLoggedIn = true;
+        session.log_status = log_status;
         res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
@@ -628,14 +623,12 @@ var fetchAdminsControllerFn = async(req,res)=>
 
     
 var sessionControllerFn = async(req,res)=>{
-        //if(session.email){
-        console.log(req.session.user)
-        if(req.session.user){
+        if(session.email){
             return res.json({
                 valid: true, 
-                email: req.session.user.email,
-                isLoggedIn: req.session.log_status,
-                log_status: req.session.user.role
+                email: session.email,
+                isLoggedIn: session.isLoggedIn,
+                log_status: session.log_status
             })
         } else {
             return res.json({valid: false})
@@ -645,12 +638,10 @@ var sessionControllerFn = async(req,res)=>{
 
 var logoutControllerFn = async(req,res)=>
     {
-        //if(session.email){
-        if(req.session.user){
-            req.session.destroy()
-            //session.email = ""
-            //session.isLoggedIn = false;
-            //session.log_status = ""
+        if(session.email){
+            session.email = ""
+            session.isLoggedIn = false;
+            session.log_status = ""
             res.clearCookie('connect.sid');
             return res.json({valid: true})
         } else {

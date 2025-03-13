@@ -37,10 +37,11 @@ app.use(session({
         // 24 * 60 * 60 * 1000 // 24 hours
         sameSite: 'strict',
         httpOnly: true
-    },
+    }
+    /* 
     store: new MemoryStore({
         checkPeriod: 86400000 // prune expired entries every 24h
-      }),
+      }), */
 }
 ))
 
