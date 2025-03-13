@@ -35,7 +35,7 @@ export class AdminOrdersComponent implements OnInit {
     ){}
 
     ngOnInit(): void {
-      this.http.get<any>(`${environment.SERVER_URI}/api/session`)
+      this.http.post<any>(`${environment.SERVER_URI}/api/session`,{})
       .subscribe(res=>{
             if(res.valid){
                 if (res.log_status === "admin") {
