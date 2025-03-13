@@ -604,8 +604,6 @@ var verifyOtpControllerFn = async(req, res) => {
             role: log_status
         }
         req.session.log_status = true
-        console.log(req.session.user)
-        console.log(req.session.log_status)
         //session.email = email;
         //session.isLoggedIn = true;
         //session.log_status = log_status;
@@ -630,6 +628,7 @@ var fetchAdminsControllerFn = async(req,res)=>
 
     
 var sessionControllerFn = async(req,res)=>{
+    console.log(req.session.user)
         //if(session.email){
         if(req.session.user){
             return res.json({
