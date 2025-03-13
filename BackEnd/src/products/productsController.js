@@ -604,6 +604,7 @@ var verifyOtpControllerFn = async(req, res) => {
             isLoggedIn: true,
             log_status: log_status
         }
+        req.session.save()
         //session.email = email;
         //session.isLoggedIn = true;
         //session.log_status = log_status;
