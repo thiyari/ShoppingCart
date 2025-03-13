@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const axios = require("axios");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-//const session = require('express-session');
+const session = require('express-session');
 
 let salt_key = process.env.PHONE_PE_SALT_KEY
 let merchant_id = process.env.PHONE_PE_MERCHANT_ID
@@ -18,7 +18,7 @@ var user = "";
 var email = "";
 
 var nm = require('nodemailer');
-//let savedOTPS = {};
+let savedOTPS = {};
 var transporter = nm.createTransport(
     {
         host: mail_host,
@@ -551,7 +551,7 @@ var sendEmailControllerFn = async(req, res) => {
         }
     )
 }
-/*
+
 var sendOtpControllerFn = async(req, res) => {
     let email = req.body.email;
     let digits = '0123456789';
@@ -592,8 +592,8 @@ var sendOtpControllerFn = async(req, res) => {
 
         }
     )
-}*/
-/*
+}
+
 var verifyOtpControllerFn = async(req, res) => {
     let otpreceived = req.body.otp;
     let email = req.body.email;
@@ -607,7 +607,7 @@ var verifyOtpControllerFn = async(req, res) => {
     else {
         res.send({"status":false,"message":"Invalid OTP"})
     }
-}*/
+}
 
 var fetchAdminsControllerFn = async(req,res)=>
     {
@@ -621,7 +621,7 @@ var fetchAdminsControllerFn = async(req,res)=>
     }
 
 
-/*    
+    
 var sessionControllerFn = async(req,res)=>{
         if(session.email){
             return res.json({
@@ -634,8 +634,8 @@ var sessionControllerFn = async(req,res)=>{
             return res.json({valid: false})
         }
 }
-*/
-/*
+
+
 var logoutControllerFn = async(req,res)=>
     {
         if(session.email){
@@ -648,7 +648,7 @@ var logoutControllerFn = async(req,res)=>
             return res.json({valid: false})
         }
     }
-*/
+
 var editAdminsControllerFn = async(req,res)=>
     {
         var result = null;
@@ -780,11 +780,11 @@ module.exports = {
     fetchPaypaltxnControllerFn,
     razorpayControllerFn,
     fetchRazorpaytxnControllerFn,
-    //sendOtpControllerFn,
-    //verifyOtpControllerFn,
+    sendOtpControllerFn,
+    verifyOtpControllerFn,
     fetchAdminsControllerFn,
-    //sessionControllerFn,
-    //logoutControllerFn,
+    sessionControllerFn,
+    logoutControllerFn,
     createAdminsControllerFn,
     editAdminsControllerFn,
     deleteAdminsControllerFn,
