@@ -3,11 +3,8 @@ const app = express()
 var mongoose = require('mongoose')
 var routes = require('./routes/routes')
 const cors = require('cors')
-const bodyParser = require('body-parser')
 require("dotenv").config();
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
-const MongoStore = require("connect-mongo");
+
 
 app.use(cors(
     {
@@ -22,28 +19,6 @@ app.use(cors(
 
 app.use(express.json({limit: "50mb"})); // setting limit to 50 MB (52428800 in bytes)
 app.use(express.urlencoded({limit: "50mb", extended: true , parameterLimit: 100000}));
-  
-app.use(cookieParser());
-app.use(bodyParser.json())
-app.use(session({
-    secret: 'web-market',
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-        mongoUrl: `${process.env.MONGO_DB_URI}/cart`,
-        collectionName: "sessions", // Optional: Custom collection name
-      }),
-    cookie: {
-        secure: true,
-        sameSite: 'strict',
-        httpOnly: true,
-        expires: new Date(Date.now() + 3600000),
-        maxAge: 3600000 // 1 lhour
-        // 24 * 60 * 60 * 1000 // 24 hours
-    }
-}
-))
-
 
 const checkDB = async()=>{
     try{
