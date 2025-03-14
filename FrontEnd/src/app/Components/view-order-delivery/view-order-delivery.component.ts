@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
-import { HttpClient } from '@angular/common/http';
 import { AggregationService } from '../../service/aggregation.service';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-view-order-delivery',
@@ -24,14 +23,13 @@ export class ViewOrderDeliveryComponent implements OnInit{
     constructor(
           private api: ApiService,
           private route: ActivatedRoute,
-          private http: HttpClient, 
           private router: Router,
           private transactions: AggregationService,
+          private session: SessionStorageService
     ){}
   ngOnInit(): void {
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
+    const res = this.session.getItem('userData');
+
               if (res.log_status === "admin") {
                 const order_id = this.route.snapshot.params['orderid'];
                 this.order = this.transactions.getData().find((item:any)=>JSON.stringify(item.orderid)===order_id)
@@ -39,11 +37,10 @@ export class ViewOrderDeliveryComponent implements OnInit{
                 this.expected_date = this.order.delivery.expected_date
                 this.delivery_date = this.order.delivery.delivery_date
                 this.tracking_id = this.order.delivery.tracking_id
-              }
-          } else {
+              } else {
             this.router.navigate(['/login'])
           }
-    })  
+
   }
 
   onOptionsSelected(event: any){
@@ -125,13 +122,7 @@ export class ViewOrderDeliveryComponent implements OnInit{
   }
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear()
+    window.close()
   }
 }

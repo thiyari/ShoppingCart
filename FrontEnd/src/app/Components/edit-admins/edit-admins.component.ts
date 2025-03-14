@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { ApiService } from '../../service/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-edit-admins',
@@ -20,15 +19,14 @@ export class EditAdminsComponent implements OnInit{
 
   constructor(     
     private api: ApiService,
-    private http: HttpClient, 
     private router: Router,
     private route: ActivatedRoute,
+    private session: SessionStorageService
   ){}
 
     ngOnInit(): void {
-      this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-      .subscribe((res)=>{
-          if(res.valid){
+      const res = this.session.getItem('userData');
+
             if (res.log_status === "admin") {
               this.id = this.route.snapshot.params['id'];
               this.api.getAdmins()
@@ -40,11 +38,10 @@ export class EditAdminsComponent implements OnInit{
                     this.phone = JSON.stringify(record.phone);
                 }
               }) 
-            }
-          } else {
+            } else {
               this.router.navigate(['/login'])
           }
-      })
+      
     }
 
   edit_admin(){
@@ -62,14 +59,8 @@ export class EditAdminsComponent implements OnInit{
   }
 
     logout(){
-      this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-          .subscribe((res)=>{
-            if(res.valid){
-              window.close();
-            } else {
-              alert("Logout Failed");
-            }
-          })
+      this.session.clear()
+      window.close()
     }
 
 }

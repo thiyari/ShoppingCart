@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../service/api.service';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-prod-edit',
@@ -26,15 +25,14 @@ export class ProdEditComponent implements OnInit{
 
   constructor(
     private api: ApiService,
-    private http: HttpClient, 
     private router: Router,
     private route: ActivatedRoute,
+    private session: SessionStorageService
    ){ }  
   
   ngOnInit(): void {
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
+    const res = this.session.getItem('userData');
+
               if (res.log_status === "admin") {
 
                 this.pid = this.route.snapshot.params['pid'];
@@ -48,11 +46,10 @@ export class ProdEditComponent implements OnInit{
                     this.images = record.images;
                   }
                 })
-            }
-          } else {
+            } else {
             this.router.navigate(['/login'])
           }
-    })    
+   
   }
 
   edit_product(){
@@ -71,14 +68,8 @@ export class ProdEditComponent implements OnInit{
 
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear()
+    window.close()
   }  
 
                           
