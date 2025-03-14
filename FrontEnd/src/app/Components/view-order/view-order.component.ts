@@ -5,7 +5,7 @@ import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
 import { ToWords } from 'to-words';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-view-order',
@@ -23,25 +23,22 @@ export class ViewOrderComponent implements OnInit{
   constructor(
     private transactions: AggregationService,
     private route: ActivatedRoute,
-    private http: HttpClient, 
-    private router: Router
+    private router: Router,
+    private session: SessionStorageService
   ){}
   ngOnInit(): void {
 
 
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
+    const res = this.session.getItem('userData');
               if (res.log_status === "user") {
                   this.log_status = "user"
               }
               else if (res.log_status === "admin") {
                   this.log_status = "admin"
-              }
-          } else {
+              } else {
             this.router.navigate(['/login'])
           }
-    })
+    
 
     const order_id = this.route.snapshot.params["orderid"]; 
     var result =this.transactions.getData();
@@ -137,14 +134,8 @@ export class ViewOrderComponent implements OnInit{
   }
   
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear();
+    window.close();
   }
 
 }

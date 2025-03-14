@@ -3,6 +3,7 @@ import { ApiService } from '../../service/api.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-user-requests',
@@ -15,16 +16,14 @@ export class UserRequestsComponent implements OnInit{
   orders_records: any;
   constructor(
     private api: ApiService,
-    private http: HttpClient, 
-    private router: Router
+    private router: Router,
+    private session: SessionStorageService
   ){}
 
   ngOnInit(): void {
 
+    const res = this.session.getItem('userData');
 
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
               if (res.log_status === "user") {
                 const email = res.email
                 this.api.getOrders()
@@ -34,11 +33,9 @@ export class UserRequestsComponent implements OnInit{
                       this.orders_records = result.sort((a:any, b:any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                     }
                   })            
-            }
-          } else {
+            } else {
             this.router.navigate(['/login'])
           }
-    })
   }
 
   onDelete(orderid:any){
@@ -60,14 +57,8 @@ export class UserRequestsComponent implements OnInit{
   }
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear();
+    window.close();
   }
 
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../../service/api.service';
-//import { LocalService } from '../../service/local.service';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent {
   constructor(
     private http: HttpClient, 
     private api: ApiService,
-    //private session: LocalService
+    private session: SessionStorageService
     ){}
 
   display: boolean = false;
@@ -60,8 +60,7 @@ export class LoginComponent {
     this.http.post<any>(`${environment.SERVER_URI}/api/verify-otp`,body)
     .subscribe((res)=>{
         if(res.status){
-            // Setting data with an expiry of 1 hour (3600000 ms)
-            //this.session.setWithExpiry("login_session", {email: this.email, log_status: "user"}, 3600000)
+            this.session.setItem("userData", {email: this.email, log_status: "user"}, 15)
             this.display = false;
             this.email = "";
             this.success = "OTP verified Successfully";

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { ApiService } from '../../service/api.service';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-user-delivery',
@@ -20,37 +20,30 @@ export class UserDeliveryComponent implements OnInit{
   delivery_date: any;
   tracking_id: any;
     constructor(
-      private http: HttpClient,
       private router: Router,
-      private api: ApiService
+      private api: ApiService,
+      private session: SessionStorageService
     ){}
     
   ngOnInit(): void {
-        this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-        .subscribe((res)=>{
-              if(res.valid){
+
+    const res = this.session.getItem('userData');
+
                   if (res.log_status === "user") {
                       this.api.getOrders().subscribe((res:any)=>{
                         if (res.message === 'Success'){
                           this.records = res.records
                         }
                       })         
-                }
-              } else {
+                } else {
                 this.router.navigate(['/login'])
               }
-        })
+  
   }
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear();
+    window.close();
   }
 
   onSubmit(){

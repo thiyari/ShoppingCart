@@ -3,6 +3,7 @@ import { ApiService } from '../../service/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-view-request',
@@ -17,26 +18,22 @@ export class ViewRequestComponent implements OnInit{
   constructor(
         private api: ApiService,
         private route: ActivatedRoute,
-        private http: HttpClient, 
-        private router: Router
+        private router: Router,
+        private session: SessionStorageService
   ){}
 
   ngOnInit(): void {
 
-
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
+    const res = this.session.getItem('userData');
               if (res.log_status === "user") {
                   this.log_status = "user"
               }
               else if (res.log_status === "admin") {
                   this.log_status = "admin"
-              }
-          } else {
+              } else {
             this.router.navigate(['/login'])
           }
-    })
+    
     const order_id = this.route.snapshot.params['orderid'];
     this.api.getOrders()
     .subscribe(res=>{
@@ -47,14 +44,8 @@ export class ViewRequestComponent implements OnInit{
   }
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear();
+    window.close();
   }
 
   send_mail(order_id: any, name: any, email: any){

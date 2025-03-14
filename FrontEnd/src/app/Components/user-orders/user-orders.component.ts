@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../service/aggregation.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-user-orders',
@@ -26,15 +26,14 @@ export class UserOrdersComponent implements OnInit {
 
   constructor(
     private transactions: AggregationService,
-    private http: HttpClient, 
     private router: Router,
-    private api: ApiService
+    private api: ApiService,
+    private session: SessionStorageService
   ){}
 
   ngOnInit(): void {
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe(res=>{
-          if(res.valid){
+    const res = this.session.getItem('userData');
+    
               if (res.log_status === "user") {
 
                 const mail_id = res.email
@@ -150,11 +149,10 @@ export class UserOrdersComponent implements OnInit {
                     }
                   }) // end orders subscription
               
-            }
-          } else {
+            } else {
             this.router.navigate(['/login'])
           }
-      })
+      //})
   }
 
   formatedDate = (savedTime:any) => {
@@ -169,14 +167,8 @@ export class UserOrdersComponent implements OnInit {
   }
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear();
+    window.close();
   }
   
 }
