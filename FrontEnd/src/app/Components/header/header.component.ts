@@ -34,19 +34,4 @@ export class HeaderComponent implements OnInit{
     this.cartService.search.next(this.searchTerm)
   }
 
-  session_verify(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe(res=>{
-      if(res.valid){
-          if (res.isLoggedIn && res.log_status === "user") {
-            window.open("/user-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
-          } 
-          else if (res.isLoggedIn && res.log_status === "admin") {
-            window.open("/admin-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
-          }
-      } else {
-        this.router.navigate(['/login'])
-      }
-    })
-  }
 }
