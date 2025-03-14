@@ -599,15 +599,15 @@ var verifyOtpControllerFn = async(req, res) => {
     let email = req.body.email;
     let log_status = req.body.log_status;
     if (savedOTPS[email] == otpreceived) {
-        req.session.user = {
+        /*req.session.user = {
             email: email,
             isLoggedIn: true,
             log_status: log_status
         }
-        req.session.save()
-        //session.email = email;
-        //session.isLoggedIn = true;
-        //session.log_status = log_status;
+        req.session.save()*/
+        session.email = email;
+        session.isLoggedIn = true;
+        session.log_status = log_status;
         res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
@@ -629,16 +629,16 @@ var fetchAdminsControllerFn = async(req,res)=>
 
     
 var sessionControllerFn = async(req,res)=>{
-        if(req.session.user.email){
-        //if(session.email){
+        //if(req.session.user.email){
+        if(session.email){
             return res.json({
                 valid: true, 
-                email: req.session.user.email,
-                isLoggedIn: req.session.user.isLoggedIn,
-                log_status: req.session.user.log_status
-                //email: session.email,
-                //isLoggedIn: session.isLoggedIn,
-                //log_status: session.log_status
+                //email: req.session.user.email,
+                //isLoggedIn: req.session.user.isLoggedIn,
+                //log_status: req.session.user.log_status
+                email: session.email,
+                isLoggedIn: session.isLoggedIn,
+                log_status: session.log_status
             })
         } else {
             return res.json({valid: false})
@@ -648,12 +648,12 @@ var sessionControllerFn = async(req,res)=>{
 
 var logoutControllerFn = async(req,res)=>
     {
-        if(req.session.user.email){
-        //if(session.email){
-            req.session.destroy();
-            //session.email = ""
-            //session.isLoggedIn = false;
-            //session.log_status = ""
+        //if(req.session.user.email){
+        if(session.email){
+            //req.session.destroy();
+            session.email = ""
+            session.isLoggedIn = false;
+            session.log_status = ""
             res.clearCookie('connect.sid');
             return res.json({valid: true})
         } else {
