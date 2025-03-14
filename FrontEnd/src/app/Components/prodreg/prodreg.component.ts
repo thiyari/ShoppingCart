@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from '../../service/api.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { Buffer } from 'buffer';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-prodreg',
@@ -24,20 +23,16 @@ export class ProdregComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private http: HttpClient, 
-    private router: Router
+    private router: Router,
+    private session: SessionStorageService
    ){ }
   ngOnInit(): void {
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
-              if (res.log_status === "user") {
+    const res = this.session.getItem('userData');
+
+            if (res.log_status === "user") {
                 this.router.navigate(['/login'])
-            }
-          } else {
-            this.router.navigate(['/login'])
-          }
-    })
+            } 
+
   }
 
   upload_images(event:any){
@@ -122,14 +117,8 @@ export class ProdregComponent implements OnInit {
 
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear()
+    window.close()
   }
 }
 

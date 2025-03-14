@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
 import { environment } from '../../../environments/environment';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -15,6 +16,7 @@ export class AdminLoginComponent {
   constructor(
     private http: HttpClient, 
     private api: ApiService,
+    private session: SessionStorageService
     ){}
     
   display: boolean = false;
@@ -58,6 +60,7 @@ moveNext(event:any){
     this.http.post<any>(`${environment.SERVER_URI}/api/verify-otp`,body)
     .subscribe((res)=>{
         if(res.status){
+            this.session.setItem("userData", {email: this.email, log_status: "admin"}, 15)
             this.display = false;
             this.email = "";
             this.success = "OTP verified Successfully";

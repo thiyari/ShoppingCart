@@ -1,8 +1,7 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../service/api.service';
 import { Router } from '@angular/router';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-prods',
@@ -18,8 +17,8 @@ filteredResult: any[] = []
 
   constructor(     
     private api: ApiService,
-    private http: HttpClient, 
     private router: Router,
+    private session: SessionStorageService
   ){}
   
   @ViewChildren('switch') switch!: QueryList<ElementRef>;
@@ -48,9 +47,8 @@ filteredResult: any[] = []
   }
 
   ngOnInit(): void {
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
+    const res = this.session.getItem('userData');
+
               if (res.log_status === "admin") {
                 this.api.getProducts()
                 .subscribe(res=>{
@@ -62,11 +60,10 @@ filteredResult: any[] = []
                     }
                   })
 
-            }
-          } else {
+            } else {
             this.router.navigate(['/login'])
           }
-    })
+
   }
 
   searchKey(data: string) {
@@ -102,14 +99,8 @@ filteredResult: any[] = []
   }
 
   logout(){
-      this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-          .subscribe((res)=>{
-            if(res.valid){
-              window.close();
-            } else {
-              alert("Logout Failed");
-            }
-          })
+      this.session.clear()
+      window.close()
     }
 
 }

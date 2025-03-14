@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
+import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({
   selector: 'app-admins-panel',
@@ -15,14 +14,13 @@ export class AdminsPanelComponent implements OnInit{
 admins: any;
   constructor(     
     private api: ApiService,
-    private http: HttpClient, 
-    private router: Router
+    private router: Router,
+    private session: SessionStorageService
   ){}
 
   ngOnInit(): void {
-    this.http.get<any>(`${environment.SERVER_URI}/api/session`)
-    .subscribe((res)=>{
-          if(res.valid){
+    const res = this.session.getItem('userData');
+
               if (res.log_status === "admin") {
                 this.api.getAdmins()
                 .subscribe(res=>{
@@ -30,11 +28,10 @@ admins: any;
                         this.admins = res.records
                     }
                   })
-            }
-          } else {
+            } else {
             this.router.navigate(['/login'])
           }
-    })
+    
   }
 
   delete_admin(id: any, name: any){
@@ -45,13 +42,7 @@ admins: any;
   }
 
   logout(){
-    this.http.get<any>(`${environment.SERVER_URI}/api/logout`)
-        .subscribe((res)=>{
-          if(res.valid){
-            window.close();
-          } else {
-            alert("Logout Failed");
-          }
-        })
+    this.session.clear();
+    window.close();
   }
 }
