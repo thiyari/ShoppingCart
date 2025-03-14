@@ -605,9 +605,9 @@ var verifyOtpControllerFn = async(req, res) => {
             log_status: log_status
         }
         req.session.save()*/
-        session.email = email;
-        session.isLoggedIn = true;
-        session.log_status = log_status;
+        //session.email = email;
+        //session.isLoggedIn = true;
+        //session.log_status = log_status;
         res.send({"status":true,"message":"OTP verified successfully"});
     }
     else {
