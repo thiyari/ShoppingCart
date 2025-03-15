@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jspdf from 'jspdf';
 import { ToWords } from 'to-words';
-import { HttpClient } from '@angular/common/http';
 import { SessionStorageService } from '../../service/session-storage.service';
 
 @Component({

@@ -3,6 +3,7 @@ import { AggregationService } from '../../service/aggregation.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
 import { SessionStorageService } from '../../service/session-storage.service';
+import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-admin-orders',
@@ -24,7 +25,8 @@ export class AdminOrdersComponent implements OnInit {
 
     filteredResult: any[] = []
     searchText: string = "";
-    
+    loading: boolean = true
+
     constructor(
       private transactions: AggregationService,
       private router: Router,
@@ -133,7 +135,6 @@ export class AdminOrdersComponent implements OnInit {
                                     this.transactions.setData(result) 
                                     this.search();
 
-
                                       }
                                     }); // end googlepay subscription
               
@@ -176,6 +177,7 @@ export class AdminOrdersComponent implements OnInit {
   }
 
   search() {
+    this.loading = false;
     this.filteredResult = this.searchText === "" ? this.aggregation_result : this.aggregation_result.filter((item:any) => {
       return (
         item.referenceid.toLowerCase().includes(this.searchText.toLowerCase()) ||

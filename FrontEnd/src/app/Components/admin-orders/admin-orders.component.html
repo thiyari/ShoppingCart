@@ -67,7 +67,8 @@
                 <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <ng-container *ngIf="filteredResult.length !=0">
-                            <div class="card container">
+                            <img src="images/loading.gif" alt="company_logo" [ngStyle]="{'width.px':50, 'height.px':50}" *ngIf="loading"/>
+                            <div class="card container" *ngIf="!loading">
                                 <div class="box">
                                     <div class="title">Orders History</div>
                                     <hr>
