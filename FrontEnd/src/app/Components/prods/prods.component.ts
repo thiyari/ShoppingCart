@@ -48,7 +48,7 @@ filteredResult: any[] = []
 
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-
+          if (res != null || res != undefined) {
               if (res.log_status === "admin") {
                 this.api.getProducts()
                 .subscribe(res=>{
@@ -60,7 +60,8 @@ filteredResult: any[] = []
                     }
                   })
 
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
 

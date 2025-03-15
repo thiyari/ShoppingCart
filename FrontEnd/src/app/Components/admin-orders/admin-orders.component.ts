@@ -35,7 +35,7 @@ export class AdminOrdersComponent implements OnInit {
 
     ngOnInit(): void {
       const res = this.session.getItem('userData');
-
+          if (res != null || res != undefined){
                 if (res.log_status === "admin") {
 
 
@@ -153,7 +153,9 @@ export class AdminOrdersComponent implements OnInit {
                       }
                     }) // end orders subscription
                 
-              } else {
+              } 
+              
+            } else {
               this.router.navigate(['/login'])
             }
 

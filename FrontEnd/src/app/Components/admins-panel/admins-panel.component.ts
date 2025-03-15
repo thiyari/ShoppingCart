@@ -20,7 +20,7 @@ admins: any;
 
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-
+          if(res != null || res != undefined){
               if (res.log_status === "admin") {
                 this.api.getAdmins()
                 .subscribe(res=>{
@@ -28,7 +28,8 @@ admins: any;
                         this.admins = res.records
                     }
                   })
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
     

@@ -22,7 +22,7 @@ export class ProductDetailsComponent implements OnInit{
 
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-
+        if (res != null || res != undefined) {
               if (res.log_status === "admin") {
                 const pid = this.route.snapshot.params['pid'];
                 this.api.getProducts()
@@ -31,7 +31,8 @@ export class ProductDetailsComponent implements OnInit{
                         this.product = res.records.find((item:any)=>JSON.stringify(item.pid)===pid)
                     }
                   })
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
 

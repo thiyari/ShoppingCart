@@ -23,7 +23,7 @@ export class PendingOrdersComponent implements OnInit{
   ngOnInit(): void {
 
     const res = this.session.getItem('userData');
-
+          if (res != null || res != undefined){
               if (res.log_status === "admin") {
                 this.api.getOrders()
                 .subscribe(res=>{
@@ -33,7 +33,8 @@ export class PendingOrdersComponent implements OnInit{
                       this.search();
                     }
                   })                
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
 

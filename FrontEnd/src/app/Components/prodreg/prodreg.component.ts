@@ -28,8 +28,8 @@ export class ProdregComponent implements OnInit {
    ){ }
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-
-            if (res.log_status === "user") {
+      
+            if (res === null || res === undefined || res.log_status === "user") {
                 this.router.navigate(['/login'])
             } 
 

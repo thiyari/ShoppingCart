@@ -23,6 +23,7 @@ export class UserRequestsComponent implements OnInit{
   ngOnInit(): void {
 
     const res = this.session.getItem('userData');
+    if (res != null || res != undefined){
 
               if (res.log_status === "user") {
                 const email = res.email
@@ -33,7 +34,8 @@ export class UserRequestsComponent implements OnInit{
                       this.orders_records = result.sort((a:any, b:any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                     }
                   })            
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
   }

@@ -28,6 +28,7 @@ export class UserDeliveryComponent implements OnInit{
   ngOnInit(): void {
 
     const res = this.session.getItem('userData');
+    if (res != null || res != undefined){
 
                   if (res.log_status === "user") {
                       this.api.getOrders().subscribe((res:any)=>{
@@ -35,7 +36,8 @@ export class UserDeliveryComponent implements OnInit{
                           this.records = res.records
                         }
                       })         
-                } else {
+                } 
+              } else {
                 this.router.navigate(['/login'])
               }
   

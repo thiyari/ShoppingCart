@@ -29,12 +29,15 @@ export class ViewOrderComponent implements OnInit{
 
 
     const res = this.session.getItem('userData');
+    if (res != null || res != undefined){
+
               if (res.log_status === "user") {
                   this.log_status = "user"
               }
               else if (res.log_status === "admin") {
                   this.log_status = "admin"
-              } else {
+              } 
+            } else {
             this.router.navigate(['/login'])
           }
     

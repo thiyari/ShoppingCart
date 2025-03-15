@@ -21,7 +21,7 @@ export class DollarFactorComponent implements OnInit{
   ){}
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-
+        if (res != null || res != undefined) {
               if (res.log_status === "admin") {
                 this.api.getDollarCurrency().subscribe((res:any)=>{
                   if(res.message === "Success"){
@@ -33,7 +33,8 @@ export class DollarFactorComponent implements OnInit{
                     }
                   }
                 })
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
 

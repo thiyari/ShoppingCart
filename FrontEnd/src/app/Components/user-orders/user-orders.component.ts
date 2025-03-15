@@ -33,7 +33,8 @@ export class UserOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-    
+    if (res != null || res != undefined){
+
               if (res.log_status === "user") {
 
                 const mail_id = res.email
@@ -149,7 +150,8 @@ export class UserOrdersComponent implements OnInit {
                     }
                   }) // end orders subscription
               
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
       //})

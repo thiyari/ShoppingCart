@@ -22,11 +22,12 @@ export class PaymentTransactionsComponent implements OnInit{
 
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-
+        if (res != null || res != undefined){
             if (res.log_status === "admin") {
                 const reference_id = this.route.snapshot.params["referenceid"]; 
                 this.record = this.transactions.getData().find((item:any)=>(item.referenceid === reference_id))
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
 

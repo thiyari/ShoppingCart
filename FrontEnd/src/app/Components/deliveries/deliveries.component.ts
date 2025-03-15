@@ -35,7 +35,7 @@ export class DeliveriesComponent implements OnInit{
   
   ngOnInit(): void {
       const res = this.session.getItem('userData');
-
+          if (res != null || res != undefined) {
                 if (res.log_status === "admin") {
 
                   this.api.getOrders()
@@ -151,7 +151,8 @@ export class DeliveriesComponent implements OnInit{
                       }
                     }) // end orders subscription
 
-              } else {
+              } 
+            } else {
               this.router.navigate(['/login'])
             }
  

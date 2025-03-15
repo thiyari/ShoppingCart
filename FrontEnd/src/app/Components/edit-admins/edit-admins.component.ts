@@ -26,7 +26,7 @@ export class EditAdminsComponent implements OnInit{
 
     ngOnInit(): void {
       const res = this.session.getItem('userData');
-
+        if(res != null || res != undefined) {
             if (res.log_status === "admin") {
               this.id = this.route.snapshot.params['id'];
               this.api.getAdmins()
@@ -38,7 +38,8 @@ export class EditAdminsComponent implements OnInit{
                     this.phone = JSON.stringify(record.phone);
                 }
               }) 
-            } else {
+            } 
+          } else {
               this.router.navigate(['/login'])
           }
       

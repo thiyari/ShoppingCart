@@ -32,7 +32,7 @@ export class ProdEditComponent implements OnInit{
   
   ngOnInit(): void {
     const res = this.session.getItem('userData');
-
+        if (res != null || res != undefined) {
               if (res.log_status === "admin") {
 
                 this.pid = this.route.snapshot.params['pid'];
@@ -46,7 +46,8 @@ export class ProdEditComponent implements OnInit{
                     this.images = record.images;
                   }
                 })
-            } else {
+            } 
+          } else {
             this.router.navigate(['/login'])
           }
    
