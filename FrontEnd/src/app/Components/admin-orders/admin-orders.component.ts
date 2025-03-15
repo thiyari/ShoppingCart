@@ -25,7 +25,6 @@ export class AdminOrdersComponent implements OnInit {
 
     filteredResult: any[] = []
     searchText: string = "";
-    loading: boolean = true
 
     constructor(
       private transactions: AggregationService,
@@ -177,7 +176,6 @@ export class AdminOrdersComponent implements OnInit {
   }
 
   search() {
-    this.loading = false;
     this.filteredResult = this.searchText === "" ? this.aggregation_result : this.aggregation_result.filter((item:any) => {
       return (
         item.referenceid.toLowerCase().includes(this.searchText.toLowerCase()) ||
