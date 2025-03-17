@@ -26,16 +26,19 @@ export class PaypalSuccessComponent implements OnInit{
     .subscribe(res=>{
       if (res.message === "Success"){
         this.transaction = res.records.find((item:any)=>{return(item.referenceid===reference_id)})
+
+        this.api.getOrders()
+        .subscribe(res=>{
+          if (res.message === "Success"){
+            this.order = res.records.find((item:any)=>{return(item.referenceid === reference_id)})
+
+            this.response = { ...this.order, ...this.transaction };
+
+            }
+          })
         }
       });
 
-    this.api.getOrders()
-    .subscribe(res=>{
-      if (res.message === "Success"){
-        this.order = res.records.find((item:any)=>{return(item.referenceid === reference_id)})
-        }
-      })
-      this.response = { ...this.order, ...this.transaction };
   }
 
 
