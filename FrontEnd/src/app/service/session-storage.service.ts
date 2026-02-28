@@ -1,27 +1,22 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionStorageService {
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor() { }
 
   setItem(key: string, value: any, expiryInMinutes: number): void {
-    if (isPlatformBrowser(this.platformId)) {
-    sessionStorage.clear();
     const now = new Date();
     const item = {
       value: value,
       expiry: now.getTime() + expiryInMinutes * 60 * 1000, // Convert minutes to milliseconds
     };
     sessionStorage.setItem(key, JSON.stringify(item));
-    }
   }
 
   getItem(key: string): any {
-    if (isPlatformBrowser(this.platformId)) {
     const itemStr = sessionStorage.getItem(key);
     if (!itemStr) {
       return null;
@@ -36,18 +31,13 @@ export class SessionStorageService {
       return null;
     }
     return item.value;
-    }
   }
 
   removeItem(key: string): void {
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.removeItem(key);
-    }
+    sessionStorage.removeItem(key);
   }
 
   clear(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.clear();
-    }
+    sessionStorage.clear();
   }
 }
