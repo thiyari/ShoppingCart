@@ -39,14 +39,13 @@ export class HeaderComponent implements OnInit{
   verify_session(event: Event){
     event.preventDefault();
     this.status = this.session.getItem("userData");
-    if (this.status != undefined || this.status != null){
-        if(this.session.getItem("userData")["log_status"] === "admin"){
+    
+    if (this.status === undefined || this.status === null || this.status === ""){
+      this.router.navigate(['/login']);
+      } else if (this.session.getItem("userData")["log_status"] === "admin"){
           window.open("/admin-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
         } else if (this.session.getItem("userData")["log_status"] === "user"){
           window.open("/user-orders", '_blank', 'location=yes,height=auto,width=auto,scrollbars=yes');
         } 
-      } else {
-        this.router.navigate(['/login']);
-      }
   }
 }

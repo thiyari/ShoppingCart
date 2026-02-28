@@ -10,6 +10,7 @@ export class SessionStorageService {
 
   setItem(key: string, value: any, expiryInMinutes: number): void {
     if (isPlatformBrowser(this.platformId)) {
+    sessionStorage.clear();
     const now = new Date();
     const item = {
       value: value,
