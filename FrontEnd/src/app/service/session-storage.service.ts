@@ -17,13 +17,13 @@ export class SessionStorageService {
           value: value,
           expiry: now.getTime() + expiryInMinutes * 60 * 1000, // Convert minutes to milliseconds
         };
-        sessionStorage.setItem(key, JSON.stringify(item));
+        localStorage.setItem(key, JSON.stringify(item));
       }
   }
 
   getItem(key: string): any | null{ 
     if (isPlatformBrowser(this.platformId)) {
-        const itemStr = sessionStorage.getItem(key);
+        const itemStr = localStorage.getItem(key);
         if (!itemStr) {
           return null;
         }
@@ -33,7 +33,7 @@ export class SessionStorageService {
 
         // Check if the item is expired
         if (now.getTime() > item.expiry) {
-          sessionStorage.removeItem(key);
+          localStorage.removeItem(key);
           return null;
         }
         return item.value;
@@ -43,13 +43,13 @@ export class SessionStorageService {
 
   removeItem(key: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
     }
   }
 
   clear(): void {
     if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.clear();
+      localStorage.clear();
     }
   }
 }
